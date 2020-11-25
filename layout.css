@@ -1,3 +1,26 @@
+/* -------- BOX ------------ */
+/*
+padding: var dimension
+size-border: var dimension
+border: var full declaration
+REMOVED ~~color-light~~
+REMOVED ~~color-dark~~
+*/
+.box {
+  display: block;
+  padding: var(--padding);
+  border: 1px solid;
+  border: var(--size-border, 1px) solid;
+  /* border: var(--border); */
+}
+.box.no-border,
+.box.border-0 {
+  border: none;
+  /* For high contrast mode if no border */
+  outline: var(--size-border) solid transparent;
+  outline-offset: calc(var(--size-border) * -1);
+}
+
 /* -------- STACK ------------ */
 /*
 gap: var dimension
@@ -14,7 +37,7 @@ NEW: stop: class bool -> apply `class="stack recursive stop"` to stop recursion 
   /* --gap: var(--gap-relative, 0.618em); */
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: var(--justify-content, flex-start);
 }
 .stack:not(.horizontal) > *,
 .stack.recursive:not(.horizontal) * {
@@ -64,28 +87,6 @@ NEW: stop: class bool -> apply `class="stack recursive stop"` to stop recursion 
   margin-left: 0;
 }
 
-/* -------- BOX ------------ */
-/*
-padding: var dimension
-size-border: var dimension
-border: var full declaration
-REMOVED ~~color-light~~
-REMOVED ~~color-dark~~
-*/
-.box {
-  padding: var(--padding);
-  border: 1px solid;
-  border: var(--size-border, 1px) solid;
-  /* border: var(--border); */
-}
-.box.no-border,
-.box.border-0 {
-  border: none;
-  /* For high contrast mode if no border */
-  outline: var(--size-border) solid transparent;
-  outline-offset: calc(var(--size-border) * -1);
-}
-
 /* -------- CENTER ------------ */
 /*
 max-width: var dimension
@@ -117,10 +118,21 @@ intrinsic: class bool
   padding-left: var(--gutters);
   padding-right: var(--gutters);
 }
-.center.intrinsic {
+.center.intrinsic,
+.center.all {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+@supports (display: grid) and (width: min(20rem, 100%)) {
+  .center.all {
+    display: grid;
+    place-items: center;
+  }
+  .center.vertical {
+    display: grid;
+    place-items: center start;
+  }
 }
 
 /* -------- CLUSTER ------------ */
@@ -129,7 +141,7 @@ gap: var dimension
 justify-content: var keyword
 align-items: var keyword
 NEW: align-content: var keyword
-NEW: overflow: class
+NEW: overflow: class bool -> watch out because it the bloc is screen wide it will force it wider
 */
 .cluster {
   /* --gap-cluster: var(--gap); */
@@ -137,11 +149,12 @@ NEW: overflow: class
 }
 /* focus style is hidden if we don't allow overflow */
 /* we can use this if there are outer margins to our cluster > than the inner margins between elements */
-/* TODO: we could try and find a better way to know if we can overflew */
-.cluster:not(.overflow) *:focus {
+/* TODO: we could try and find a better way to know if we can overflow */
+/* This does not work with buttons in a cluster. The border eats up on the outline */
+/* .cluster:not(.overflow) *:focus {
   outline: 1px solid;
   outline-offset: -1px;
-}
+} */
 .cluster.overflow {
   overflow: visible;
 }
@@ -209,6 +222,9 @@ limit: class number | The maximum number of elements allowed to appear in the ho
 .switcher > * {
   display: flex;
   flex-wrap: wrap;
+  justify-content: var(--justify-content, baseline);
+  align-items: var(--align-items, flex-start);
+  align-content: var(--align-content, stretch);
   margin: calc((var(--gap) / 2) * -1);
   overflow: hidden; /* NEW */
 }

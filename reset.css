@@ -43,7 +43,8 @@ body {
   line-height: 1.5;
 }
 /* A elements that don't have a class get default styles */
-a:not([class]) {
+/* MOD: Apply on all links instead because we overwrite this on .reset class */
+a {
   text-decoration-skip-ink: auto;
 }
 /* Make images easier to work with */
@@ -81,10 +82,13 @@ pre {
   overflow-x: scroll;
 }
 a,
-button,
-.button,
-input[type="submit"],
-input[type="button"],
-input[type="reset"] {
+button:enabled,
+.button:enabled,
+input[type="submit"]:enabled,
+input[type="button"]:enabled,
+input[type="reset"]:enabled {
   cursor: pointer;
+}
+a.reset {
+  text-decoration: none;
 }
