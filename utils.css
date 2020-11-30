@@ -3,3 +3,6 @@
   margin-left: 50%;
   transform: translateX(-50%);
 }
+.text-center {
+  text-align: center;
+}

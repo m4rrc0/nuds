@@ -181,6 +181,8 @@ no-stretch: class bool | Make the adjacent elements adopt their natural height (
 side-width: var dimension | The width of the sidebar (empty means not set; defaults to the content width)
 right: class bool | Whether the sidebar element is the :last-child or :first-child
 content-min var dimension(%) = 50% | The narrowest the content (main) element can be before wrapping. Should be a percentage.
+explicit: class bool | means we are going to explicitely set the .sidebar class instead of using .right
+sidebar: class bool on child
 */
 .with-sidebar {
   overflow: hidden;
@@ -199,12 +201,13 @@ content-min var dimension(%) = 50% | The narrowest the content (main) element ca
   /* TODO: check that it is ignored if the var is not assigned a value */
   flex-basis: var(--side-width);
 }
-.with-sidebar:not(.right) > * > :last-child {
+.with-sidebar:not(.explicit):not(.right) > * > :last-child,
+.with-sidebar.explicit > * > :not(.sidebar) {
   flex-basis: 0;
   flex-grow: 999;
   min-width: calc(var(--content-min, 50%) - var(--gap));
 }
-.with-sidebar.right > * > :first-child {
+.with-sidebar.right:not(.explicit) > * > :first-child {
   flex-basis: 0;
   flex-grow: 999;
   min-width: calc(var(--content-min, 50%) - var(--gap));
@@ -284,9 +287,12 @@ no-padding: class bool  (false) | Whether to remove the padding from the parent 
 /*
 gap: var dimension
 width-column: var dimension -> minimum col width (or flex-basis if in flex mode)
+NEW: max-width-column: var dimension - don't grow column indefinitely
 NEW: force: class bool
+NEW: place-items
 
 NEW: flex: class bool
+NEW: no-flex: class bool (not sure it is fully implemented)
 NEW: flex-basis: var dimension (if .flex)
 NEW: justify-content: var keyword
 NEW: flex-grow: var number
@@ -319,6 +325,7 @@ Remark: if we have very small columns (and only then!!), consider using the clas
     flex-wrap: wrap;
     justify-content: var(--justify-content, baseline); /* NOTE: interesting? */
     margin: calc(var(--gap, 1rem) / 2 * -1);
+    place-items: var(--place-items);
   }
   .grid:not(.no-flex):not(.force) > * > * {
     flex: 1 1;
@@ -326,7 +333,7 @@ Remark: if we have very small columns (and only then!!), consider using the clas
     flex-grow: var(--flex-grow, 1); /* TODO: interesting? */
     flex-basis: var(--flex-basis, var(--width-column, 10rem));
     /* TODO: interesting? can be useful to limit width of elements when less elements on the last row */
-    /* max-width: calc(var(--flex-basis, var(--width-column, 10rem)) * 2); */
+    max-width: var(--max-width-column);
     margin: calc(var(--gap, 1rem) / 2);
   }
 }
@@ -339,6 +346,7 @@ Remark: if we have very small columns (and only then!!), consider using the clas
     flex-wrap: wrap;
     justify-content: var(--justify-content, baseline); /* NOTE: interesting? */
     margin: calc(var(--gap, 1rem) / 2 * -1);
+    place-items: var(--place-items);
   }
   .grid:not(.no-flex):not(.force).flex > * > * {
     flex: 1 1;
@@ -346,7 +354,7 @@ Remark: if we have very small columns (and only then!!), consider using the clas
     flex-grow: var(--flex-grow, 1); /* TODO: interesting? */
     flex-basis: var(--flex-basis, var(--width-column, 10rem));
     /* TODO: interesting? can be useful to limit width of elements when less elements on the last row */
-    /* max-width: calc(var(--flex-basis, var(--width-column, 10rem)) * 2); */
+    max-width: var(--max-width-column);
     margin: calc(var(--gap, 1rem) / 2);
   }
 }
@@ -360,6 +368,10 @@ Remark: if we have very small columns (and only then!!), consider using the clas
     grid-gap: var(--gap, 1rem);
     align-content: start; /* NEW */
     grid-template-columns: 100%;
+    place-items: var(--place-items);
+  }
+  .grid:not(.flex) > * > * {
+    max-width: var(--max-width-column);
   }
   /* NOTE: this does not need the min() fct but depends on the JS observer and we don't want JS.
   I prefer falling back to flexbox or even simple 100% width div */
@@ -389,6 +401,10 @@ we have very narrow columns smaller than any screen we want to support */
     auto-fill,
     minmax(var(--width-column, 10rem), 1fr)
   );
+  place-items: var(--place-items);
+}
+.grid:not(.flex).force > * > * {
+  max-width: var(--max-width-column);
 }
 
 /* -------- FRAME ------------ */
