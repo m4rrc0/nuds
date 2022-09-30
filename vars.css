@@ -11,8 +11,6 @@
   --font-mono-fallback: env(--font-mono-fallback);
 
   /* --- SIZES --- */
-  --measure-text: env(--measure-text);
-
   --size-base-px: env(--size-base-px); /* unitless px value (if necessary) */
   /* unitless px value of max size cross site (if necessary) */
   --size-max-px: env(--size-max-px);
@@ -22,27 +20,58 @@
   /* (baseSize = 16, maxSize = 100, steps = 12) => 1.16499 */
   /* --size-scale-ratio: sizeScaleRatio(); */
   --size-scale-ratio: env(--size-scale-ratio);
-
+  --size-relative-ratio: env(--size-relative-ratio);
+  
   --size-lock-screen-min: env(--size-lock-screen-min);
   --size-lock-screen-max: env(--size-lock-screen-max);
   /* TODO: does not work */
   /* --fluid-min-screen-px: 400;
-    --fluid-min-screen: calc(var(--fluid-min-screen-px) / var(--size-base-px));
-    --fluid-max-screen-px: 600;
-    --fluid-max-screen: calc(var(--fluid-max-screen-px) / (var(--size-base-max) * var(--size-base-px))); */
+  --fluid-min-screen: calc(var(--fluid-min-screen-px) / var(--size-base-px));
+  --fluid-max-screen-px: 600;
+  --fluid-max-screen: calc(var(--fluid-max-screen-px) / (var(--size-base-max) * var(--size-base-px))); */
+  
+
+  --width-measure: env(--width-measure);
+  --width-measure-relative: env(--width-measure-relative);
+  --width-measure-ratio: env(--width-measure-ratio);
+  --width-max: env(--width-max);
+  --width-relative-ratio: env(--width-relative-ratio);
+  --width-narrow: env(--width-narrow);
+  /* --width-main: env(--width-main); */
+  /* --width-aside: env(--width-aside); */
+
+  --border-radius-s: env(--border-radius-s);
+  --border-radius-m: env(--border-radius-m);
+  --border-radius-l: env(--border-radius-l);
+  --border-radius-circle: env(--border-radius-circle);
+
+  /* --shadow-raised-s: 0 0px 6px rgb(0 0 0 / 30%);
+  --shadow-raised-m: 0 30px 60px -20px rgb(0 0 0 / 20%), 0 50px 100px -10px rgb(23 41 64 / 10%); */
+  --shadow-raised-s: 0px 5px 10px 0px rgba(0,0,0,0.3);
+  --shadow-raised-m: 0px 5px 10px 5px rgba(0,0,0,0.3);
+
 }
 
-@custom-selector :--h1 h1, h1 *, .h1, .h1 *;
-@custom-selector :--h2 h2, h2 *, .h2, .h2 *;
-@custom-selector :--h3 h3, h3 *, .h3, .h3 *;
-@custom-selector :--h4 h4, h4 *, .h4, .h4 *;
-@custom-selector :--h5 h5, h5 *, .h5, .h5 *;
-@custom-selector :--h6 h6, h6 *, .h6, .h6 *;
+@custom-selector :--h1 h1, .h1;
+@custom-selector :--h1_ :--h1, :--h1 *;
+@custom-selector :--h2 h2, .h2;
+@custom-selector :--h2_ :--h2, :--h2 *;
+@custom-selector :--h3 h3, .h3;
+@custom-selector :--h3_ :--h3, :--h3 *;
+@custom-selector :--h4 h4, .h4;
+@custom-selector :--h4_ :--h4, :--h4 *;
+@custom-selector :--h5 h5, .h5;
+@custom-selector :--h5_ :--h5, :--h5 *;
+@custom-selector :--h6 h6, .h6;
+@custom-selector :--h6_ :--h6, :--h6 *;
 @custom-selector :--headings :--h1, :--h2, :--h3, :--h4, :--h5, :--h6;
+@custom-selector :--headings_ :--h1_, :--h2_, :--h3_, :--h4_, :--h5_, :--h6_;
 @custom-selector :--code tt, code, kbd, pre, samp;
 @custom-selector :--strong strong, .strong, b, .b, .bold;
-@custom-selector :--bold :--strong;
-@custom-selector :--em em, .em;
+@custom-selector :--strong_ :--strong, :--strong *;
+@custom-selector :--em em, .em, .italic;
+@custom-selector :--em_ :--em, :--em *;
+@custom-selector :--button button, .button, input[type='submit'], input[type='button'], input[type='reset'];
 
 /* :--headings {
   color: env(--main-color) !important;

@@ -8,6 +8,8 @@
   /* margin: 0; */
   /* padding: 0; */
 }
+/* ul[class], */
+/* ol[class] { */
 ul.reset,
 ol.reset {
   /* Remove default padding */
@@ -24,7 +26,9 @@ h4,
 h5,
 h6,
 p,
-ul.reset, /* originaly was ul[class] but can cause specificity issues. For example, it overrides .cluster > * { margin: ... } */
+/* ul[class], /* [class] can cause specificity issues. For example, it overrides .cluster > * { margin: ... } */
+/* ol[class], */
+ul.reset,
 ol.reset,
 li,
 figure,
@@ -43,13 +47,15 @@ body {
   line-height: 1.5;
 }
 /* A elements that don't have a class get default styles */
-/* MOD: Apply on all links instead because we overwrite this on .reset class */
+/* NOTE: IMO should be a default for <a> elems */
+/* a:not([class]) { */
 a {
   text-decoration-skip-ink: auto;
 }
 /* Make images easier to work with */
 img {
   max-width: 100%;
+  height: auto; /* Keep aspect ratio */
   display: block;
 }
 /* Natural flow and rhythm in articles by default */
@@ -82,13 +88,25 @@ pre {
   overflow-x: scroll;
 }
 a,
-button:enabled,
-.button:enabled,
-input[type="submit"]:enabled,
-input[type="button"]:enabled,
-input[type="reset"]:enabled {
+button,
+.button,
+input[type='submit'],
+input[type='button'],
+input[type='reset'] {
   cursor: pointer;
 }
-a.reset {
-  text-decoration: none;
+a.reset,
+a.reset *,
+.reset-a a,
+.reset-a a *,
+.reset-down-a a,
+.reset-down-a a * {
+  /* color: inherit; */
+  text-decoration: inherit;
+  /* border-bottom: none; */
+}
+p svg {
+  height: 1em;
+  vertical-align: middle;
+  /* display: inline-block; */
 }

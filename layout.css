@@ -1,3 +1,81 @@
+@custom-selector :--stack .stack, [data-l-stack], [data-layout~="stack"];
+
+/* -------- STACK ------------ */
+/*
+gap: var dimension
+recursive: class bool
+split-after: class int
+NEW: (impossible without JS) split-type: var <element> // To avoid ":nth-child" and be able to use ":nth-of-type" // Triggered with .split-after class
+NEW: horizontal: class bool
+NEW: stop: class bool -> apply `class="stack recursive stop"` to stop recursion down this path
+NEW: justify-content: var keyword
+NEW: align-items: var keyword
+NEW: align-content: var keyword
+*/
+:--stack {
+  /* --gap-stack: var(--gap); */
+
+  /* --gap: 0.618em; */
+  /* --gap: var(--gap-relative, 0.618em); */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  justify-content: var(--justify-content, flex-start);
+  align-items: stretch;
+  align-items: var(--align-items, stretch);
+  align-content: stretch;
+  align-content: var(--align-content, stretch);
+}
+:--stack:not(.horizontal) > *,
+:--stack.recursive:not(.horizontal) * {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+:--stack:not(.horizontal) > * + *,
+:--stack.recursive:not(.horizontal) * + * {
+  margin-top: var(--gap);
+}
+/* horizontal mod */
+:--stack.horizontal {
+  flex-direction: row;
+  align-items: center;
+  align-items: var(--align-items, center);
+}
+:--stack.horizontal > *,
+:--stack.horizontal.recursive * {
+  margin-left: 0;
+  margin-right: 0;
+}
+:--stack.horizontal > * + *,
+:--stack.horizontal.recursive * + * {
+  margin-left: var(--gap);
+}
+/* split-after */
+:--stack[class^='split-after']:only-child,
+:--stack.split:only-child {
+  height: 100%;
+}
+/* NOTE: could be better to just set margin-bottom: auto; inline on the element */
+/* TODO: Could use a mixin */
+/* prettier-ignore */
+:--stack:not(.horizontal).split-after-1 > :nth-child(1) { margin-bottom: auto; } /* prettier-ignore */
+:--stack.horizontal.split-after-1 > :nth-child(1) { margin-right: auto; } /* prettier-ignore */
+:--stack:not(.horizontal).split-after-2 > :nth-child(2) { margin-bottom: auto; } /* prettier-ignore */
+:--stack.horizontal.split-after-2 > :nth-child(2) { margin-right: auto; } /* prettier-ignore */
+:--stack:not(.horizontal).split-after-3 > :nth-child(3) { margin-bottom: auto; } /* prettier-ignore */
+:--stack.horizontal.split-after-3 > :nth-child(3) { margin-right: auto; } /* prettier-ignore */
+:--stack:not(.horizontal).split-after-4 > :nth-child(4) { margin-bottom: auto; } /* prettier-ignore */
+:--stack.horizontal.split-after-4 > :nth-child(4) { margin-right: auto; } /* prettier-ignore */
+:--stack:not(.horizontal).split-after-5 > :nth-child(5) { margin-bottom: auto; } /* prettier-ignore */
+:--stack.horizontal.split-after-5 > :nth-child(5) { margin-right: auto; } /* prettier-ignore */
+/* --- ... --- */
+
+:--stack:not(.horizontal).recursive.stop * + *,
+:--stack.horizontal.recursive.stop * + * {
+  margin-top: 0;
+  margin-left: 0;
+}
+
 /* -------- BOX ------------ */
 /*
 padding: var dimension
@@ -7,7 +85,6 @@ REMOVED ~~color-light~~
 REMOVED ~~color-dark~~
 */
 .box {
-  display: block;
   padding: var(--padding);
   border: 1px solid;
   border: var(--size-border, 1px) solid;
@@ -19,72 +96,6 @@ REMOVED ~~color-dark~~
   /* For high contrast mode if no border */
   outline: var(--size-border) solid transparent;
   outline-offset: calc(var(--size-border) * -1);
-}
-
-/* -------- STACK ------------ */
-/*
-gap: var dimension
-recursive: class bool
-split-after: class int
-NEW: (impossible without JS) split-type: var <element> // To avoid ":nth-child" and be able to use ":nth-of-type" // Triggered with .split-after class
-NEW: horizontal: class bool
-NEW: stop: class bool -> apply `class="stack recursive stop"` to stop recursion down this path
-*/
-.stack {
-  /* --gap-stack: var(--gap); */
-
-  /* --gap: 0.618em; */
-  /* --gap: var(--gap-relative, 0.618em); */
-  display: flex;
-  flex-direction: column;
-  justify-content: var(--justify-content, flex-start);
-}
-.stack:not(.horizontal) > *,
-.stack.recursive:not(.horizontal) * {
-  margin-top: 0;
-  margin-bottom: 0;
-}
-.stack:not(.horizontal) > * + *,
-.stack.recursive:not(.horizontal) * + * {
-  margin-top: var(--gap);
-}
-/* horizontal mod */
-.stack.horizontal {
-  flex-direction: row;
-}
-.stack.horizontal > *,
-.stack.horizontal.recursive * {
-  margin-left: 0;
-  margin-right: 0;
-}
-.stack.horizontal > * + *,
-.stack.horizontal.recursive * + * {
-  margin-left: var(--gap);
-}
-/* split-after */
-.stack[class^="split-after"]:only-child,
-.stack.split:only-child {
-  height: 100%;
-}
-/* NOTE: could be better to just set margin-bottom: auto; inline on the element */
-/* TODO: Could use a mixin */
-/* prettier-ignore */
-.stack:not(.horizontal).split-after-1 > :nth-child(1) { margin-bottom: auto; } /* prettier-ignore */
-.stack.horizontal.split-after-1 > :nth-child(1) { margin-right: auto; } /* prettier-ignore */
-.stack:not(.horizontal).split-after-2 > :nth-child(2) { margin-bottom: auto; } /* prettier-ignore */
-.stack.horizontal.split-after-2 > :nth-child(2) { margin-right: auto; } /* prettier-ignore */
-.stack:not(.horizontal).split-after-3 > :nth-child(3) { margin-bottom: auto; } /* prettier-ignore */
-.stack.horizontal.split-after-3 > :nth-child(3) { margin-right: auto; } /* prettier-ignore */
-.stack:not(.horizontal).split-after-4 > :nth-child(4) { margin-bottom: auto; } /* prettier-ignore */
-.stack.horizontal.split-after-4 > :nth-child(4) { margin-right: auto; } /* prettier-ignore */
-.stack:not(.horizontal).split-after-5 > :nth-child(5) { margin-bottom: auto; } /* prettier-ignore */
-.stack.horizontal.split-after-5 > :nth-child(5) { margin-right: auto; } /* prettier-ignore */
-/* --- ... --- */
-
-.stack:not(.horizontal).recursive.stop * + *,
-.stack.horizontal.recursive.stop * + * {
-  margin-top: 0;
-  margin-left: 0;
 }
 
 /* -------- CENTER ------------ */
@@ -100,39 +111,26 @@ intrinsic: class bool
   box-sizing: content-box;
   margin-left: auto;
   margin-right: auto;
-  max-width: var(--max-width, var(--measure, 38rem));
+  max-width: var(--max-width, var(--width-max, var(--measure, 38rem)));
 }
 .center.max {
-  /* TODO: change in origin */
-  /* width: var(--max-width, var(--measure, 38rem)); */
-  width: 100%;
+  width: var(--max-width, var(--width-max, var(--measure, 38rem)));
+  max-width: 100%;
 }
-/* TODO: change in origin "text-center" */
-.center.text-center {
+.center.text {
   text-align: center;
 }
 /* .center.gutters-s {} */
 /* .center.gutters, .center.gutters-m {} */
 .center.gutters,
-.center[class*="gutters-"] {
+.center[class*='gutters-'] {
   padding-left: var(--gutters);
   padding-right: var(--gutters);
 }
-.center.intrinsic,
-.center.all {
+.center.intrinsic {
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-@supports (display: grid) and (width: min(20rem, 100%)) {
-  .center.all {
-    display: grid;
-    place-items: center;
-  }
-  .center.vertical {
-    display: grid;
-    place-items: center start;
-  }
 }
 
 /* -------- CLUSTER ------------ */
@@ -141,7 +139,7 @@ gap: var dimension
 justify-content: var keyword
 align-items: var keyword
 NEW: align-content: var keyword
-NEW: overflow: class bool -> watch out because it the bloc is screen wide it will force it wider
+NEW: overflow: class
 */
 .cluster {
   /* --gap-cluster: var(--gap); */
@@ -149,12 +147,11 @@ NEW: overflow: class bool -> watch out because it the bloc is screen wide it wil
 }
 /* focus style is hidden if we don't allow overflow */
 /* we can use this if there are outer margins to our cluster > than the inner margins between elements */
-/* TODO: we could try and find a better way to know if we can overflow */
-/* This does not work with buttons in a cluster. The border eats up on the outline */
-/* .cluster:not(.overflow) *:focus {
+/* TODO: we could try and find a better way to know if we can overflew */
+.cluster:not(.overflow) *:focus {
   outline: 1px solid;
   outline-offset: -1px;
-} */
+}
 .cluster.overflow {
   overflow: visible;
 }
@@ -173,6 +170,9 @@ NEW: overflow: class bool -> watch out because it the bloc is screen wide it wil
 .cluster > * > * {
   margin: calc(var(--gap) / 2);
 }
+/* Does not work */
+/* .cluster.split-after-1 > * > :nth-child(1) { margin-right: auto; } /* prettier-ignore */
+
 
 /* -------- WITH SIDEBAR ------------ */
 /*
@@ -181,8 +181,6 @@ no-stretch: class bool | Make the adjacent elements adopt their natural height (
 side-width: var dimension | The width of the sidebar (empty means not set; defaults to the content width)
 right: class bool | Whether the sidebar element is the :last-child or :first-child
 content-min var dimension(%) = 50% | The narrowest the content (main) element can be before wrapping. Should be a percentage.
-explicit: class bool | means we are going to explicitely set the .sidebar class instead of using .right
-sidebar: class bool on child
 */
 .with-sidebar {
   overflow: hidden;
@@ -193,21 +191,22 @@ sidebar: class bool on child
   margin: calc(var(--gap) / 2 * -1);
 }
 .with-sidebar.no-stretch > * {
-  align-items: "flex-start";
+  align-items: 'flex-start';
 }
-.with-sidebar > * > * {
+.with-sidebar > * > *,
+.with-sidebar > * > *[class] {
   margin: calc(var(--gap) / 2);
   flex-grow: 1;
-  /* TODO: check that it is ignored if the var is not assigned a value */
-  flex-basis: var(--side-width);
+  flex-basis: var(
+    --side-width
+  ); /* TODO: check that it is ignored if the var is not assigned a value */
 }
-.with-sidebar:not(.explicit):not(.right) > * > :last-child,
-.with-sidebar.explicit > * > :not(.sidebar) {
+.with-sidebar:not(.right) > * > :last-child {
   flex-basis: 0;
   flex-grow: 999;
   min-width: calc(var(--content-min, 50%) - var(--gap));
 }
-.with-sidebar.right:not(.explicit) > * > :first-child {
+.with-sidebar.right > * > :first-child {
   flex-basis: 0;
   flex-grow: 999;
   min-width: calc(var(--content-min, 50%) - var(--gap));
@@ -225,9 +224,6 @@ limit: class number | The maximum number of elements allowed to appear in the ho
 .switcher > * {
   display: flex;
   flex-wrap: wrap;
-  justify-content: var(--justify-content, baseline);
-  align-items: var(--align-items, flex-start);
-  align-content: var(--align-content, stretch);
   margin: calc((var(--gap) / 2) * -1);
   overflow: hidden; /* NEW */
 }
@@ -261,10 +257,8 @@ no-padding: class bool  (false) | Whether to remove the padding from the parent 
 .cover {
   display: flex;
   flex-direction: column;
-  /* TODO: change in origin. Default should be 100% because would break layout if custom properties not supported */
-  min-height: 100%;
-  /* TODO: change in origin here too */
-  min-height: var(--min-height, 100%);
+  min-height: 100vh;
+  min-height: var(--min-height, 100vh);
   padding: var(--gap);
 }
 .cover.no-padding {
@@ -287,12 +281,9 @@ no-padding: class bool  (false) | Whether to remove the padding from the parent 
 /*
 gap: var dimension
 width-column: var dimension -> minimum col width (or flex-basis if in flex mode)
-NEW: max-width-column: var dimension - don't grow column indefinitely
 NEW: force: class bool
-NEW: place-items
 
 NEW: flex: class bool
-NEW: no-flex: class bool (not sure it is fully implemented)
 NEW: flex-basis: var dimension (if .flex)
 NEW: justify-content: var keyword
 NEW: flex-grow: var number
@@ -308,7 +299,9 @@ Possible behaviors:
       - it is supported
 
 Default: using only the class .grid will progressively enhance by default from basic divs to grid with min(max())
-Remark: if we have very small columns (and only then!!), consider using the class .force which will force the column width even if min(max()) is not supported
+Remarks: 
+  - if we have very small columns (and only then!!), consider using the class .force which will force the column width even if min(max()) is not supported
+  - /!\ using flex requires a wrapper element so always set it like so.
 */
 /* .grid {
   --gap-grid: var(--gap);
@@ -325,7 +318,6 @@ Remark: if we have very small columns (and only then!!), consider using the clas
     flex-wrap: wrap;
     justify-content: var(--justify-content, baseline); /* NOTE: interesting? */
     margin: calc(var(--gap, 1rem) / 2 * -1);
-    place-items: var(--place-items);
   }
   .grid:not(.no-flex):not(.force) > * > * {
     flex: 1 1;
@@ -333,7 +325,7 @@ Remark: if we have very small columns (and only then!!), consider using the clas
     flex-grow: var(--flex-grow, 1); /* TODO: interesting? */
     flex-basis: var(--flex-basis, var(--width-column, 10rem));
     /* TODO: interesting? can be useful to limit width of elements when less elements on the last row */
-    max-width: var(--max-width-column);
+    /* max-width: calc(var(--flex-basis, var(--width-column, 10rem)) * 2); */
     margin: calc(var(--gap, 1rem) / 2);
   }
 }
@@ -346,7 +338,6 @@ Remark: if we have very small columns (and only then!!), consider using the clas
     flex-wrap: wrap;
     justify-content: var(--justify-content, baseline); /* NOTE: interesting? */
     margin: calc(var(--gap, 1rem) / 2 * -1);
-    place-items: var(--place-items);
   }
   .grid:not(.no-flex):not(.force).flex > * > * {
     flex: 1 1;
@@ -354,7 +345,7 @@ Remark: if we have very small columns (and only then!!), consider using the clas
     flex-grow: var(--flex-grow, 1); /* TODO: interesting? */
     flex-basis: var(--flex-basis, var(--width-column, 10rem));
     /* TODO: interesting? can be useful to limit width of elements when less elements on the last row */
-    max-width: var(--max-width-column);
+    /* max-width: calc(var(--flex-basis, var(--width-column, 10rem)) * 2); */
     margin: calc(var(--gap, 1rem) / 2);
   }
 }
@@ -368,10 +359,6 @@ Remark: if we have very small columns (and only then!!), consider using the clas
     grid-gap: var(--gap, 1rem);
     align-content: start; /* NEW */
     grid-template-columns: 100%;
-    place-items: var(--place-items);
-  }
-  .grid:not(.flex) > * > * {
-    max-width: var(--max-width-column);
   }
   /* NOTE: this does not need the min() fct but depends on the JS observer and we don't want JS.
   I prefer falling back to flexbox or even simple 100% width div */
@@ -401,10 +388,6 @@ we have very narrow columns smaller than any screen we want to support */
     auto-fill,
     minmax(var(--width-column, 10rem), 1fr)
   );
-  place-items: var(--place-items);
-}
-.grid:not(.flex).force > * > * {
-  max-width: var(--max-width-column);
 }
 
 /* -------- FRAME ------------ */
@@ -446,7 +429,7 @@ aspect-ratio: var number or fraction (16/9) | The element's aspect ratio
 object-fit: var keyword (cover) | object-fit for images
 */
 .ratio {
-  position: "relative";
+  position: 'relative';
 }
 .ratio > img,
 .ratio > picture > img {
@@ -456,7 +439,7 @@ object-fit: var keyword (cover) | object-fit for images
   object-fit: var(--object-fit, cover);
 }
 .ratio::before {
-  content: "";
+  content: '';
   display: block;
   padding-bottom: calc(100% / var(--aspect-ratio, 16/9));
 }
