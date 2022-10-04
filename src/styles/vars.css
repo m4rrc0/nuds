@@ -21,7 +21,7 @@
   /* --size-scale-ratio: sizeScaleRatio(); */
   --size-scale-ratio: env(--size-scale-ratio);
   --size-relative-ratio: env(--size-relative-ratio);
-  
+
   --size-lock-screen-min: env(--size-lock-screen-min);
   --size-lock-screen-max: env(--size-lock-screen-max);
   /* TODO: does not work */
@@ -29,7 +29,6 @@
   --fluid-min-screen: calc(var(--fluid-min-screen-px) / var(--size-base-px));
   --fluid-max-screen-px: 600;
   --fluid-max-screen: calc(var(--fluid-max-screen-px) / (var(--size-base-max) * var(--size-base-px))); */
-  
 
   --width-measure: env(--width-measure);
   --width-measure-relative: env(--width-measure-relative);
@@ -47,31 +46,9 @@
 
   /* --shadow-raised-s: 0 0px 6px rgb(0 0 0 / 30%);
   --shadow-raised-m: 0 30px 60px -20px rgb(0 0 0 / 20%), 0 50px 100px -10px rgb(23 41 64 / 10%); */
-  --shadow-raised-s: 0px 5px 10px 0px rgba(0,0,0,0.3);
-  --shadow-raised-m: 0px 5px 10px 5px rgba(0,0,0,0.3);
-
+  --shadow-raised-s: 0px 5px 10px 0px rgba(0, 0, 0, 0.3);
+  --shadow-raised-m: 0px 5px 10px 5px rgba(0, 0, 0, 0.3);
 }
-
-@custom-selector :--h1 h1, .h1;
-@custom-selector :--h1_ :--h1, :--h1 *;
-@custom-selector :--h2 h2, .h2;
-@custom-selector :--h2_ :--h2, :--h2 *;
-@custom-selector :--h3 h3, .h3;
-@custom-selector :--h3_ :--h3, :--h3 *;
-@custom-selector :--h4 h4, .h4;
-@custom-selector :--h4_ :--h4, :--h4 *;
-@custom-selector :--h5 h5, .h5;
-@custom-selector :--h5_ :--h5, :--h5 *;
-@custom-selector :--h6 h6, .h6;
-@custom-selector :--h6_ :--h6, :--h6 *;
-@custom-selector :--headings :--h1, :--h2, :--h3, :--h4, :--h5, :--h6;
-@custom-selector :--headings_ :--h1_, :--h2_, :--h3_, :--h4_, :--h5_, :--h6_;
-@custom-selector :--code tt, code, kbd, pre, samp;
-@custom-selector :--strong strong, .strong, b, .b, .bold;
-@custom-selector :--strong_ :--strong, :--strong *;
-@custom-selector :--em em, .em, .italic;
-@custom-selector :--em_ :--em, :--em *;
-@custom-selector :--button button, .button, input[type='submit'], input[type='button'], input[type='reset'];
 
 /* :--headings {
   color: env(--main-color) !important;

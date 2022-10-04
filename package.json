@@ -4,8 +4,28 @@
   "description": "",
   "main": "global.css",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev:postcss": "postcss src/styles/**/*.css --dir public --watch",
+    "dev:vite": "vite",
+    "dev": "concurrently \"npm:dev:postcss\" \"vite\"",
+    "build:postcss": "postcss src/styles/**/*.css --dir public",
+    "build:vite": "vite build",
+    "build": "npm run build:postcss && npm run build:vite",
+    "preview": "vite preview",
+    "serve": "vite preview"
   },
   "author": "",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^7.4.0",
+    "cssnano": "^5.1.13",
+    "postcss": "^8.4.17",
+    "postcss-cli": "^10.0.0",
+    "postcss-functions": "^4.0.2",
+    "postcss-import": "^15.0.0",
+    "postcss-mixins": "^9.0.4",
+    "postcss-preset-env": "^7.8.2",
+    "rollup-plugin-postcss": "^4.0.2",
+    "vite": "^3.1.4"
+  }
 }

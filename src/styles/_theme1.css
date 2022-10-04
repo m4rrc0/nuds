@@ -1,0 +1,138 @@
+/* === CUSTOM SELECTORS === */
+/* ======================== */
+/* We can (re)define custom selctors on the USER level if needed */
+/* NOTE: this overwrites the default so do NOT forget to copy-paste then modify the defaults if needed */
+@custom-selector :--color-palette-match [class*="cp-"];
+
+/* === FONTS === */
+/* ============= */
+/* LOAD critical fonts */
+/* @font-face {
+  font-family: 'QuicksandCritical';
+  font-style: normal;
+  font-weight: 400;
+  src: url('/assets/fonts/QuicksandCritical.woff2') format('woff2');
+  font-display: fallback;
+} */
+/* LOAD preferred fonts */
+/* latin-ext */
+/* @font-face {
+  font-family: 'Quicksand';
+  font-style: normal;
+  font-weight: 300 700;
+  src: url('/assets/fonts/Quicksand-LatinExt.woff2') format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  font-display: swap;
+} */
+/* latin */
+/* @font-face {
+  font-family: 'Quicksand';
+  font-style: normal;
+  font-weight: 300 700;
+  src: url('/assets/fonts/Quicksand-Latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  font-display: swap;
+} */
+
+:root {
+  /* TODO: if we want more than the system fonts stacks */
+  /* --font-body-preferred: TODO; */
+  /* --font-heading-preferred: TODO; */
+  /* --font-code-preferred: TODO; */
+  /* TODO: if we want to load a subsetted font file for example */
+  /* --font-body-critical: TODO; */
+  /* --font-heading-critical: TODO; */
+  /* --font-code-critical: TODO; */
+  /* TODO: if we want to change the default system font stack */
+  /* DEFAULTS are as follows */
+  /* --font-body-fallback: var(--system-fonts-stack-sans-serif); */
+  /* --font-heading-fallback: var(--system-fonts-stack-sans-serif); */
+  /* --font-code-fallback: var(--system-fonts-stack-mono); */
+  /* AVAILABLE: --system-fonts-stack-sans-serif, --system-fonts-stack-serif, --system-fonts-stack-mono */
+  --font-heading-fallback: helvetica neue, helvetica, arial, roboto, avenir next,
+    avenir, segoe ui, Cantarell, Ubuntu, noto, -apple-system, BlinkMacSystemFont,
+    sans-serif;
+  /* IF you know what you are doing, you can also change the default system fonts stacks, for example to change the order of the fonts */
+  --system-fonts-stack-sans-serif: roboto, helvetica neue, helvetica,
+    avenir next, avenir, segoe ui, Cantarell, Ubuntu, noto, -apple-system,
+    BlinkMacSystemFont, arial, sans-serif;
+}
+
+/* === COLORS === */
+/* ============== */
+/* --- color VARIABLES --- */
+/* ---------------------- */
+:root {
+  /* The theme could define a set of default colors to choose from */
+  --hsl-white: 0deg, 0%, 100%;
+  --color-white: hsl(var(--hsl-white));
+  --hsl-blue: 221deg, 55%, 41%;
+  --color-blue: hsl(var(--hsl-blue));
+  --color-blue-trans: hsla(var(--hsl-blue), 0.8);
+  --hsl-teal: 181deg, 100%, 34%;
+  --color-teal: hsl(var(--hsl-teal));
+  --hsl-red: 347, 78%, 60%;
+  --color-red: hsl(var(--hsl-red));
+  --hsl-orange: 19deg, 100%, 64%;
+  --color-orange: hsl(var(--hsl-orange));
+  --hsl-purple: 273deg, 40%, 49%;
+  --color-purple: hsl(var(--hsl-purple));
+  --hsl-green: 111deg, 48%, 54%;
+  --color-green: hsl(var(--hsl-green));
+  --color-black: hsl(0, 0%, 7%);
+  --color-dark: hsl(0, 0%, 20%);
+  --color-grey: hsl(0, 0%, 53%);
+}
+/* --- color PALETTES --- */
+/* ---------------------- */
+/* The theme designer should provide a set of palettes to choose from */
+/* since color variables can be overwriten by user, it makes it super easy to adapt a palette to user's brand */
+:root,
+body,
+.cp-classic {
+  /* The theme could define a default color palette from the default colors */
+  --color-front: var(--color-blue); /* prettier-ignore */
+  --color-front-alt: var(--color-blue); /* prettier-ignore */
+  --color-front-accent: var(--color-teal); /* prettier-ignore */
+  --color-front-muted: var(--color-blue-trans); /* prettier-ignore */
+  --color-front-success: var(--color-green); /* prettier-ignore */
+  --color-front-warning: var(--color-orange); /* prettier-ignore */
+  --color-front-error: var(--color-red); /* prettier-ignore */
+  --color-back: var(--color-white); /* prettier-ignore */
+  --color-back-alt: var(--color-white); /* prettier-ignore */
+  --color-back-accent: var(--color-white); /* prettier-ignore */
+  --color-back-muted: var(--color-white); /* prettier-ignore */
+  --color-back-success: var(--color-green); /* prettier-ignore */
+  --color-back-warning: var(--color-orange); /* prettier-ignore */
+  --color-back-error: var(--color-red); /* prettier-ignore */
+}
+
+/* --- color palette ALTernate assignments --- */
+/* ------------------------------------------- */
+/* ? The theme designer could create alt assignments...? */
+.cp-alt-funky {
+  /* We only need to redefine the changes from the default assignment */
+  --color-front-theme: var(--color-front-accent); /* prettier-ignore */
+  --color-front-accent-theme: var(--color-front); /* prettier-ignore */
+  --color-back-theme: var(--color-back-accent); /* prettier-ignore */
+  --color-back-accent-theme: var(--color-back); /* prettier-ignore */
+}
+/* --- Color palettes EXCEPTIONS --- */
+/* --------------------------------- */
+/* we can manage exceptions on a palette or alt basis if necessary */
+/* :--button[data-c-p~="contrast"], */
+button[class*="cp-"][class*="-contrast"],
+button.cp-alt {
+  --color-text__button--hover: var(--color-bg);
+  --color-bg__button--hover: var(--color-text);
+  --color-border__button: var(--color-bg);
+  --color-outline: var(--color-bg);
+}
+
+/* If you use unexpected names for palette colors AND you use alts, you need to specify them here */
+/* :root {
+  --color-special-name-theme: var(--color-special-name);
+} */
+
+/* === SPACES === */
+/* ============== */

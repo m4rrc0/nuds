@@ -1,0 +1,79 @@
+/* @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=Josefin+Sans:ital,wght@0,300..700;1,300..700&family=Literata:ital,wght@0,400..700;1,400..700&display=swap'); */
+/* NOTE: We can get a 'subset' -> can use 'text' param in url */
+/* abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 !:/;.,?-"'()[]&éèàçêë€$£ç */
+/* URL encoded becomes */
+/* abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789%20%21%3A%2F%3B.%2C%3F-%22%27%28%29%5B%5D%26%C3%A9%C3%A8%C3%A0%C3%A7%C3%AA%C3%AB%E2%82%AC%24%C2%A3%C3%A7 */
+/* EX */
+/* https://fonts.googleapis.com/css2?family=Fira+Code:wght@400&text=abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789%20%21%3A%2F%3B.%2C%3F-%22%27%28%29%5B%5D%26%C3%A9%C3%A8%C3%A0%C3%A7%C3%AA%C3%AB%E2%82%AC%24%C2%A3%C3%A7 */
+
+/* FONTS loading strategy: simply use font-display: swap; OR font-display: fallback; (the former gives FOUT even on cached font while the latest gives a very brief FOIT) */
+:root {
+  --mono: 0; /* Monospace: Sans (natural-width) or Mono (fixed-width) */
+  --casl: 0; /* Casual: Linear to Casual */
+  --wght: 400; /* Weight: 300 to 1000, Light to ExtraBlack – usually set with `font-weight` */
+  --slnt: 0; /* Slant: 0 to -15 degrees */
+  --ital: 0; /* Italic: always roman, auto, or always italic */
+  --system-fonts-stack-sans-serif: -apple-system, BlinkMacSystemFont,
+    avenir next, avenir, segoe ui, helvetica neue, helvetica, Cantarell, Ubuntu,
+    roboto, noto, arial, sans-serif;
+  --system-fonts-stack-serif: Iowan Old Style, Apple Garamond, Baskerville,
+    Times New Roman, Droid Serif, Times, Source Serif Pro, serif,
+    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
+  --system-fonts-stack-mono: Menlo, Consolas, Monaco, Liberation Mono,
+    Lucida Console, monospace;
+
+  --font-body-fallback: var(--system-fonts-stack-sans-serif);
+  --font-heading-fallback: var(--system-fonts-stack-sans-serif);
+  --font-code-fallback: var(--system-fonts-stack-mono);
+
+  /* prettier-ignore */
+  --fbp: var(--font-body-preferred, var(--font-body-critical, var(--font-body-fallback))); /* prettier-ignore */
+  --fbc: var(--font-body-critical, var(--font-body-fallback)); /* prettier-ignore */
+  --font-body: var(--fbp, var(--fbc, var(--font-body-fallback, var(--font-body-fallback)))); /* prettier-ignore */
+  /* prettier-ignore */
+  --fhp: var(--font-heading-preferred, var(--font-heading-critical, var(--font-heading-fallback))); /* prettier-ignore */
+  --fhc: var(--font-heading-critical, var(--font-heading-fallback)); /* prettier-ignore */
+  --font-heading: var(--fhp, var(--fhc, var(--font-heading-fallback))); /* prettier-ignore */
+  /* prettier-ignore */
+  --fcp: var(--font-code-preferred, var(--font-code-critical, var(--font-code-fallback))); /* prettier-ignore */
+  --fcc: var(--font-code-critical, var(--font-code-fallback)); /* prettier-ignore */
+  --font-code: var(--fcp, var(--fcc, var(--font-code-fallback))); /* prettier-ignore */
+}
+
+html {
+  line-height: 1.45;
+  font-family: var(--font-body);
+}
+
+* {
+  /* apply axis values with CSS custom properties */
+  font-variation-settings: "MONO" var(--mono), "CASL" var(--casl),
+    "wght" var(--wght), "slnt" var(--slnt), "ital" var(--ital);
+}
+
+:--headings_ {
+  line-height: 1.3;
+  font-weight: 700;
+  --wght: 700;
+  /* --casl: 0.2; */
+  /* --slnt: -2; */
+  font-family: var(--font-heading);
+}
+
+:--code_ {
+  --mono: 1;
+  /* --casl: 1; */
+  /* --ital: 1; */
+  font-family: var(--font-code);
+}
+
+:--strong_ {
+  font-weight: 700;
+  --wght: 700;
+}
+
+:--em_ {
+  font-style: italic;
+  --slnt: -10;
+  --ital: 1;
+}

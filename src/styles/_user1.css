@@ -1,0 +1,49 @@
+/* === CUSTOM SELECTORS === */
+/* We can (re)define custom selctors on the USER level if needed */
+/* NOTE: this overwrites the default so do NOT forget to copy-paste then modify the defaults if needed */
+@custom-selector :--color-palette-match [class*="cp-"];
+
+/* === COLORS === */
+:root {
+  /* All the colors we might want to use throughout the site with their respective variable names */
+  --hsl-white: 0deg, 0%, 100%;
+  --color-white: hsl(var(--hsl-white));
+  --hsl-blue: 221deg, 55%, 41%;
+  --color-blue: hsl(var(--hsl-blue));
+  --color-blue-trans: hsla(var(--hsl-blue), 0.8);
+  --hsl-teal: 181deg, 100%, 34%;
+  --color-teal: hsl(var(--hsl-teal));
+  --hsl-red: 347, 78%, 60%;
+  --color-red: hsl(var(--hsl-red));
+  --hsl-orange: 19deg, 100%, 64%;
+  --color-orange: hsl(var(--hsl-orange));
+  --hsl-purple: 273deg, 40%, 49%;
+  --color-purple: hsl(var(--hsl-purple));
+  --hsl-green: 111deg, 48%, 54%;
+  --color-green: hsl(var(--hsl-green));
+  --color-black: hsl(0, 0%, 7%);
+  --color-dark: hsl(0, 0%, 20%);
+  --color-grey: hsl(0, 0%, 53%);
+}
+/* color PALETTES */
+/* :root,
+body,
+.cp-classic,
+.cp-main,
+.cp-blue {
+  --color-back: var(--color-white);
+  --color-front: var(--color-blue);
+  --color-front-accent: var(--color-teal);
+}
+.cp-red,
+.cp-danger {
+  --color-back: var(--color-white);
+  --color-front: var(--color-red);
+  --color-front-accent: var(--color-blue);
+}
+.cp-trans,
+.cp-blue-trans {
+  --color-back: var(--color-blue-trans);
+  --color-front: var(--color-white);
+  --color-front-accent: var(--color-teal);
+} */
