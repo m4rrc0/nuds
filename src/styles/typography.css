@@ -23,26 +23,22 @@
     Lucida Console, monospace;
 
   --font-body-fallback: var(--system-fonts-stack-sans-serif);
+  --font-body-critical: var(--font-body-fallback);
+  --font-body-preferred: var(--font-body-critical);
   --font-heading-fallback: var(--system-fonts-stack-sans-serif);
+  --font-heading-critical: var(--font-heading-fallback);
+  --font-heading-preferred: var(--font-heading-critical);
   --font-code-fallback: var(--system-fonts-stack-mono);
-
-  /* prettier-ignore */
-  --fbp: var(--font-body-preferred, var(--font-body-critical, var(--font-body-fallback))); /* prettier-ignore */
-  --fbc: var(--font-body-critical, var(--font-body-fallback)); /* prettier-ignore */
-  --font-body: var(--fbp, var(--fbc, var(--font-body-fallback, var(--font-body-fallback)))); /* prettier-ignore */
-  /* prettier-ignore */
-  --fhp: var(--font-heading-preferred, var(--font-heading-critical, var(--font-heading-fallback))); /* prettier-ignore */
-  --fhc: var(--font-heading-critical, var(--font-heading-fallback)); /* prettier-ignore */
-  --font-heading: var(--fhp, var(--fhc, var(--font-heading-fallback))); /* prettier-ignore */
-  /* prettier-ignore */
-  --fcp: var(--font-code-preferred, var(--font-code-critical, var(--font-code-fallback))); /* prettier-ignore */
-  --fcc: var(--font-code-critical, var(--font-code-fallback)); /* prettier-ignore */
-  --font-code: var(--fcp, var(--fcc, var(--font-code-fallback))); /* prettier-ignore */
+  --font-code-critical: var(--font-code-fallback);
+  --font-code-preferred: var(--font-code-critical);
 }
 
 html {
-  line-height: 1.45;
-  font-family: var(--font-body);
+  line-height: var(--line-height-body, 1.5);
+  /* TODO: check that it works for loading and swaping fonts -> critical to preferred */
+  font-family: var(--font-body-fallback);
+  font-family: var(--font-body-critical);
+  font-family: var(--font-body-preferred);
 }
 
 * {
@@ -50,21 +46,24 @@ html {
   font-variation-settings: "MONO" var(--mono), "CASL" var(--casl),
     "wght" var(--wght), "slnt" var(--slnt), "ital" var(--ital);
 }
-
-:--headings_ {
-  line-height: 1.3;
+:--headings {
+  line-height: var(--line-height-heading, 1.1);
   font-weight: 700;
   --wght: 700;
   /* --casl: 0.2; */
   /* --slnt: -2; */
-  font-family: var(--font-heading);
+  font-family: var(--font-heading-fallback);
+  font-family: var(--font-heading-critical);
+  font-family: var(--font-heading-preferred);
 }
 
 :--code_ {
   --mono: 1;
   /* --casl: 1; */
   /* --ital: 1; */
-  font-family: var(--font-code);
+  font-family: var(--font-code-fallback);
+  font-family: var(--font-code-critical);
+  font-family: var(--font-code-preferred);
 }
 
 :--strong_ {

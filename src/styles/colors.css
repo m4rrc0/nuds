@@ -1,5 +1,13 @@
 /* nuds color system - user defined values */
 /* --------------------------------------- */
+@custom-selector :--palette-match [class*="cp-"], :--color-palette-match;
+@custom-selector :--palette-alt-classic
+  .cp-alt-classic,
+  :--color-palette-alt-classic;
+@custom-selector :--palette-alt-contrast
+  .cp-alt,
+  .cp-alt-contrast,
+  :--color-palette-alt-contrast;
 
 :root {
   /* Bare minimum default in case nothing is defined */
@@ -8,7 +16,7 @@
 
 /* Assign the palette colors to elements */
 body,
-:--color-palette-match {
+:--palette-match {
   /* --- DEFAULTS --- */
   --color-text: var(--color-front-theme);
   --color-bg: var(--color-back-theme);
@@ -49,6 +57,10 @@ body,
   /* --color-bg__code: var(--color-front-accent-theme); */
   /* --color-border__code: var(--color-front-theme); */
 
+  /* --- SCROLLBAR --- */
+  /* TODO: this is for the Reel Layout Component */
+  /* --track-color */
+  /* --thumb-color */
   /*  */
 
   /* nuds color system - default rules and values */
@@ -70,55 +82,55 @@ body,
 
 /* More variable names definitions and fallback values for css selectors */
 *:--focus,
-:--color-palette-match:--focus,
-:--color-palette-match *:--focus {
+:--palette-match:--focus,
+:--palette-match *:--focus {
   outline-color: var(
     --color-outline--focus,
     var(--color-outline, currentcolor)
   );
 }
 *:--selection,
-:--color-palette-match:--selection,
-:--color-palette-match *:--selection {
+:--palette-match:--selection,
+:--palette-match *:--selection {
   color: var(--color-text--selection);
   background-color: var(--color-bg--selection);
 }
 a,
-a:--color-palette-match,
-:--color-palette-match a {
+a:--palette-match,
+:--palette-match a {
   color: var(--color-text__a);
   background-color: var(--color-bg__a);
 }
 a:--hover,
-a:--color-palette-match:--hover,
-:--color-palette-match a:--hover {
+a:--palette-match:--hover,
+:--palette-match a:--hover {
   color: var(--color-text__a--hover);
   background-color: var(--color-bg__a--hover);
 }
 :--button,
-:--button:--color-palette-match,
-:--color-palette-match :--button {
+:--button:--palette-match,
+:--palette-match :--button {
   color: var(--color-text__button);
   background-color: var(--color-bg__button);
   border-color: var(--color-border__button, currentcolor);
 }
 :--button:--hover,
-:--button:--color-palette-match:--hover,
-:--color-palette-match :--button:--hover {
+:--button:--palette-match:--hover,
+:--palette-match :--button:--hover {
   color: var(--color-text__button--hover);
   background-color: var(--color-bg__button--hover);
   border-color: var(--color-border__button--hover, currentcolor);
 }
 :--button:--disabled,
-:--button:--color-palette-match:--disabled,
-:--color-palette-match :--button:--disabled {
+:--button:--palette-match:--disabled,
+:--palette-match :--button:--disabled {
   color: var(--color-text__button--disabled);
   background-color: var(--color-bg__button--disabled);
   border-color: var(--color-border__button--disabled, currentcolor);
 }
 :--code,
-:--code:--color-palette-match,
-:--color-palette-match :--code {
+:--code:--palette-match,
+:--palette-match :--code {
   color: var(--color-text__code);
   background-color: var(--color-bg__code);
   border-color: var(--color-border__code);
@@ -127,7 +139,7 @@ a:--color-palette-match:--hover,
 
 /* Every element inherits colors for the closest defined parent */
 body *,
-:--color-palette-match * {
+:--palette-match * {
   color: inherit;
   /* ... except for the background that should probably just remain transparent */
   /* background-color: inherit; */
@@ -187,8 +199,8 @@ body *,
 }
 
 /* color palette ALTernate assignments */
-:--color-palette-alt-classic,
-:--color-palette-match {
+:--palette-alt-classic,
+:--palette-match {
   --color-front-theme: var(--color-front); /* prettier-ignore */
   --color-front-alt-theme: var(--color-front-alt); /* prettier-ignore */
   --color-front-accent-theme: var(--color-front-accent); /* prettier-ignore */
@@ -204,7 +216,7 @@ body *,
   --color-back-warning-theme: var(--color-back-warning); /* prettier-ignore */
   --color-back-error-theme: var(--color-back-error); /* prettier-ignore */
 }
-:--color-palette-alt-contrast {
+:--palette-alt-contrast {
   --color-front-theme: var(--color-back); /* prettier-ignore */
   --color-front-alt-theme: var(--color-back-alt); /* prettier-ignore */
   --color-front-accent-theme: var(--color-back-accent); /* prettier-ignore */

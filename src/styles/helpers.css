@@ -1,3 +1,5 @@
+@custom-selector :--p p, .p;
+@custom-selector :--p_ :--p, :--p *;
 @custom-selector :--h1 h1, .h1;
 @custom-selector :--h1_ :--h1, :--h1 *;
 @custom-selector :--h2 h2, .h2;
@@ -23,10 +25,3 @@
 @custom-selector :--selection ::selection, .selection;
 @custom-selector :--hover :hover, .hover;
 @custom-selector :--disabled :disabled, .disabled;
-
-@custom-selector :--color-palette-match [class*="cp-"];
-@custom-selector :--color-palette-alt-classic .cp-alt-classic;
-@custom-selector :--color-palette-alt-contrast
-  .cp-alt,
-  .cp-alt-contrast,
-  .theme-dark;

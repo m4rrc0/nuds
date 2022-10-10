@@ -14,21 +14,7 @@ set global vars on :root */
   --s6: clamp(2.618rem, 4.802vw + 1.718rem, 5.559rem);
   --s7: clamp(3.074rem, 6.527vw + 1.85rem, 7.071rem);
   --s8: clamp(3.609rem, 8.794vw + 1.96rem, 8.995rem);
-  --s9: clamp(4.237rem, 11.763vw + 2.031rem, 11.442rem);
-  --s10: clamp(4.974rem, 15.641vw + 2.041rem, 14.554rem);
-  --s11: clamp(5.839rem, 20.691vw + 1.96rem, 18.512rem);
-}
 
-/* 2. ------------------------------------
-We will work by context. Whatever the context we are in, we need to compute the css locks for every size on the common scale */
-/*
-the lock is the fluid value
-the size-... is the fluid value bound within a min and max IF the browser supports min/max css functions ELSE it will just be the fluid value
-*/
-
-body,
-.s-ctx-prose,
-*[class*="s-ctx-"] {
   --s-h-3: var(--s8, 4rem);
   --s-h-2: var(--s7, 3.5rem);
   --s-h-1: var(--s6, 3rem);
@@ -43,34 +29,6 @@ body,
   --s-h7: var(--s-2, 0.6rem);
   --s-h8: var(--s-3, 0.4rem);
   --s-h9: var(--s-4, 0.25rem);
-}
-.s-ctx-blog {
-  --s-h1: var(--s5, 2rem);
-}
-.s-ctx-builder {
-  --s-h-3: var(--s11, 4rem);
-  --s-h-2: var(--s10, 3.5rem);
-  --s-h-1: var(--s9, 3rem);
-  --s-h0: var(--s8, 2.5rem);
-  --s-h1: var(--s7, 2rem);
-  --s-h2: var(--s6, 1.8rem);
-  --s-h3: var(--s5, 1.5rem);
-  --s-h4: var(--s4, 1.2rem);
-  --s-p: var(--s3, 1rem);
-  --s-h5: var(--s2, 1rem);
-  --s-h6: var(--s1, 0.8rem);
-  --s-h7: var(--s0, 0.6rem);
-  --s-h8: var(--s-1, 0.4rem);
-  --s-h9: var(--s-2, 0.25rem);
-}
-
-body,
-.w-ctx-prose,
-*[class*="w-ctx-"] {
-  /* prettier-ignore */
-  & :--h1 { max-width: 20ch; } /* prettier-ignore */
-  & :--h2, & :--h3 { max-width: 30ch; } /* prettier-ignore */
-  & :--p { max-width: 70ch; } /* prettier-ignore */
 }
 
 /* --- FONT SIZE --- */ /* prettier-ignore */
@@ -104,38 +62,222 @@ body, .fs-p, .p, p { font-size: var(--s-p); } /* prettier-ignore */
 .gap-h7, .gap-down-h7 > * { --gap: var(--s-h7); } /* prettier-ignore */
 .gap-h8, .gap-down-h8 > * { --gap: var(--s-h8); } /* prettier-ignore */
 .gap-h9, .gap-down-h9 > * { --gap: var(--s-h9); }
+/* ------------------- */
+
+.test {
+  /* 
+  As seen on https://www.aleksandrhovhannisyan.com/blog/fluid-type-scale-with-css-clamp/
+  The ideal size in the middle of the clamp is
+  y = mx + b
+  where
+    m = slope = (maxFontSize - minFontSize) / (maxBreakpoint - minBreakpoint)
+    x = x coord (small or large) = e.g. minBreakpoint
+    y = y coord (small or large according to previous choice)  = e.g. minFontSize
+   */
+
+  /* --step-0: clamp(1.31rem, calc(1.24rem + 0.37vw), 1.50rem); */
+  /* --step-0: clamp(1.00rem, calc(0.88rem + 0.50vw), 1.19rem); */
+  --bp-s-px: 400;
+  --bp-l-px: 1000;
+  --fs-s-px: 16;
+  --fs-l-px: 19;
+  --m: calc(
+    (var(--fs-l-px) - var(--fs-s-px)) / (var(--bp-l-px) - var(--bp-s-px))
+  ); /* unitless */
+  --b: calc(
+    var(--fs-s-px) - var(--m) * var(--bp-s-px)
+  ); /* correspond to px value but unitless */
+
+  --step-0: clamp(
+    calc(var(--fs-s-px) * 1rem / 16),
+    calc((var(--m) * 100vw) + (var(--b) * 1rem / 16)),
+    calc(var(--fs-l-px) * 1rem / 16)
+  );
+
+  font-size: var(--step-0);
+  line-height: 1;
+}
+/*
+measure = intrinsic widths sizes
+s... = unitless scale values determined by size-scale-ratio
+-> can also be computed with a max and min size and steps between
+size-lock... = used for computing css locks for every size we need
+*/
+:root {
+  --s-14: calc(var(--s-13) / var(--size-scale-ratio));
+  --s-13: calc(var(--s-12) / var(--size-scale-ratio));
+  --s-12: calc(var(--s-11) / var(--size-scale-ratio));
+  --s-11: calc(var(--s-10) / var(--size-scale-ratio));
+  --s-10: calc(var(--s-9) / var(--size-scale-ratio));
+  --s-9: calc(var(--s-8) / var(--size-scale-ratio));
+  --s-8: calc(var(--s-7) / var(--size-scale-ratio));
+  --s-7: calc(var(--s-6) / var(--size-scale-ratio));
+  --s-6: calc(var(--s-5) / var(--size-scale-ratio));
+  --s-5: calc(var(--s-4) / var(--size-scale-ratio));
+  --s-4: calc(var(--s-3) / var(--size-scale-ratio));
+  --s-3: calc(var(--s-2) / var(--size-scale-ratio));
+  --s-2: calc(var(--s-1) / var(--size-scale-ratio));
+  --s-1: var(--s0);
+  --s0: var(--size-base);
+  --s1: var(--s0);
+  --s2: calc(var(--s1) * var(--size-scale-ratio));
+  --s3: calc(var(--s2) * var(--size-scale-ratio));
+  --s4: calc(var(--s3) * var(--size-scale-ratio));
+  --s5: calc(var(--s4) * var(--size-scale-ratio));
+  --s6: calc(var(--s5) * var(--size-scale-ratio));
+  --s7: calc(var(--s6) * var(--size-scale-ratio));
+  --s8: calc(var(--s7) * var(--size-scale-ratio));
+  --s9: calc(var(--s8) * var(--size-scale-ratio));
+  --s10: calc(var(--s9) * var(--size-scale-ratio));
+  --s11: calc(var(--s10) * var(--size-scale-ratio));
+  --s12: calc(var(--s11) * var(--size-scale-ratio));
+}
+
+/* 2. ------------------------------------
+We will work by context. Whatever the context we are in, we need to compute the css locks for every size on the common scale */
+/*
+the lock is the fluid value
+the size-... is the fluid value bound within a min and max IF the browser supports min/max css functions ELSE it will just be the fluid value
+*/
+
+body,
+*[class*="size-context-"] {
+  /* ARCHIVE: Lock formula */
+  /* --lock-h0: calc(
+    (var(--size-h0-min) * 1rem) +
+    (var(--size-h0-max) - var(--size-h0-min)) *
+    (100vw - (var(--size-lock-screen-min) * 1rem)) /
+    (var(--size-lock-screen-max) - var(--size-lock-screen-min))
+  );
+  --lock-h1: ...
+  --lock-h2: ... */
+  @mixin locks h-1, h0, h1, h2, h3, h4, p, h5, h6, h7, h8, h9;
+  /* Can also use function */
+  /* --lock-h1: lock(var(--size-h1-min),var(--size-h1-max),var(--size-lock-screen-min),var(--size-lock-screen-max)); */
+
+  /* --size-font: var(--lock); */
+  --size-h-1: var(--lock-h-1);
+  --size-h0: var(--lock-h0);
+  --size-h1: var(--lock-h1);
+  --size-h2: var(--lock-h2);
+  --size-h3: var(--lock-h3);
+  --size-h4: var(--lock-h4);
+  --size-p: var(--lock-p);
+  --size-h5: var(--lock-h5);
+  --size-h6: var(--lock-h6);
+  --size-h7: var(--lock-h7);
+  --size-h8: var(--lock-h8);
+  --size-h9: var(--lock-h9);
+
+  /* NOTE: Have to use @support because for some reason firefox is not skipping the rule even though it does not know min(max()) */
+  @supports (font-size: min(max(16px, 2.2vw), 22px)) {
+    /* ARCHIVE: Clamp lacks browser support */
+    /* --size-h0: clamp((var(--size-h0-min) * 1rem), var(--lock-h0), (var(--size-h0-max) * 1rem)); */
+    /* https://caniuse.com/#feat=css-math-functions */
+    /* See https://css-tricks.com/simplified-fluid-typography/ */
+
+    /* Combination with the formula to avoid media queries */
+    /* prettier-ignore */
+    --size-h-1: min(max((var(--size-h-1-min) * 1rem), var(--lock-h-1)), (var(--size-h-1-max) * 1rem)); /* prettier-ignore */
+    --size-h0: min(max((var(--size-h0-min) * 1rem), var(--lock-h0)), (var(--size-h0-max) * 1rem)); /* prettier-ignore */
+    --size-h1: min(max((var(--size-h1-min) * 1rem), var(--lock-h1)), (var(--size-h1-max) * 1rem)); /* prettier-ignore */
+    --size-h2: min(max((var(--size-h2-min) * 1rem), var(--lock-h2)), (var(--size-h2-max) * 1rem)); /* prettier-ignore */
+    --size-h3: min(max((var(--size-h3-min) * 1rem), var(--lock-h3)), (var(--size-h3-max) * 1rem)); /* prettier-ignore */
+    --size-h4: min(max((var(--size-h4-min) * 1rem), var(--lock-h4)), (var(--size-h4-max) * 1rem)); /* prettier-ignore */
+    --size-p: min(max((var(--size-p-min) * 1rem), var(--lock-p)), (var(--size-p-max) * 1rem)); /* prettier-ignore */
+    --size-h5: min(max((var(--size-h5-min) * 1rem), var(--lock-h5)), (var(--size-h5-max) * 1rem)); /* prettier-ignore */
+    --size-h6: min(max((var(--size-h6-min) * 1rem), var(--lock-h6)), (var(--size-h6-max) * 1rem)); /* prettier-ignore */
+    --size-h7: min(max((var(--size-h7-min) * 1rem), var(--lock-h7)), (var(--size-h7-max) * 1rem)); /* prettier-ignore */
+    --size-h8: min(max((var(--size-h8-min) * 1rem), var(--lock-h8)), (var(--size-h8-max) * 1rem));
+    --size-h9: min(
+      max((var(--size-h9-min) * 1rem), var(--lock-h9)),
+      (var(--size-h9-max) * 1rem)
+    );
+  }
+  /* If no support for min(max()) we use media queries for more predictability */
+  @supports not (font-size: min(max(16px, 2.2vw), 22px)) {
+    @media (width > calc(env(--size-lock-screen-max) * 1rem)) {
+      --size-h-1: calc(var(--size-h-1-max) * 1rem);
+      --size-h0: calc(var(--size-h0-max) * 1rem);
+      --size-h1: calc(var(--size-h1-max) * 1rem);
+      --size-h2: calc(var(--size-h2-max) * 1rem);
+      --size-h3: calc(var(--size-h3-max) * 1rem);
+      --size-h4: calc(var(--size-h4-max) * 1rem);
+      --size-p: calc(var(--size-p-max) * 1rem);
+      --size-h5: calc(var(--size-h5-max) * 1rem);
+      --size-h6: calc(var(--size-h6-max) * 1rem);
+      --size-h7: calc(var(--size-h7-max) * 1rem);
+      --size-h8: calc(var(--size-h8-max) * 1rem);
+      --size-h9: calc(var(--size-h9-max) * 1rem);
+    }
+    @media (width < calc(env(--size-lock-screen-min) * 1rem)) {
+      --size-h-1: calc(var(--size-h-1-min) * 1rem);
+      --size-h0: calc(var(--size-h0-min) * 1rem);
+      --size-h1: calc(var(--size-h1-min) * 1rem);
+      --size-h2: calc(var(--size-h2-min) * 1rem);
+      --size-h3: calc(var(--size-h3-min) * 1rem);
+      --size-h4: calc(var(--size-h4-min) * 1rem);
+      --size-p: calc(var(--size-p-min) * 1rem);
+      --size-h5: calc(var(--size-h5-min) * 1rem);
+      --size-h6: calc(var(--size-h6-min) * 1rem);
+      --size-h7: calc(var(--size-h7-min) * 1rem);
+      --size-h8: calc(var(--size-h8-min) * 1rem);
+      --size-h9: calc(var(--size-h9-min) * 1rem);
+    }
+  }
+
+  /* --lh-h0: calc(var(--size-h0) * 1.45);
+  --lh-h1: calc(var(--size-h1) * 1.45);
+  --lh-h2: calc(var(--size-h2) * 1.45);
+  --lh-h3: calc(var(--size-h3) * 1.45);
+  --lh-h4: calc(var(--size-h4) * 1.45);
+  --lh-p: calc(var(--size-p) * 1.45);
+  --lh-h5: calc(var(--size-h5) * 1.45);
+  --lh-h6: calc(var(--size-h6) * 1.45);
+  --lh-h7: calc(var(--size-h7) * 1.45);
+  --lh-h8: calc(var(--size-h8) * 1.45);
+  --lh-h9: calc(var(--size-h9) * 1.45);
+   */
+}
 
 /* 3. ------------------------------------
   Default use of context values by assigning the appropriate sizes to reusable vars for margins, paddings, ... */
 /* TODO: what vars do we need throughout the app? Isn't --size-h1 -> --size-h8 enough and more declarative? */
 body,
-*[class*="s-ctx-"] {
+*[class*="size-context-"] {
   /* should have multiple widths (max, measure, aside, min, 0, ?) */
   /* --size-relative-ratio is defined in tokens = 1.618 by default */
-  /* --size-relative-xs: calc(var(--size-relative-s) / var(--size-relative-ratio));
-  --size-relative-s: calc(var(--size-relative-m) / var(--size-relative-ratio));
+  --size-relative-xs: calc(
+    var(--size-relative-s) / var(--size-relative-ratio)
+  ); /* 0.382 */
+  --size-relative-s: calc(
+    var(--size-relative-m) / var(--size-relative-ratio)
+  ); /* 0.618 */
   --size-relative-m: 1em;
-  --size-relative-l: calc(var(--size-relative-m) * var(--size-relative-ratio));
-  --size-relative-xl: calc(var(--size-relative-l) * var(--size-relative-ratio));
-  --size-relative: var(--size-relative-m); */
+  --size-relative-l: calc(
+    var(--size-relative-m) * var(--size-relative-ratio)
+  ); /* 1.618 */
+  --size-relative-xl: calc(
+    var(--size-relative-l) * var(--size-relative-ratio)
+  ); /* 2.618 */
+  --size-relative: var(--size-relative-m);
 
   /* --- main site's sections widths --- */
-  /* --measure: var(--width-measure);
+  --measure: var(--width-measure);
   --measure-relative: var(--width-measure-relative);
   --width-measure-h1: calc(var(--size-h1) * var(--width-measure-ratio));
   --width-measure-h2: calc(var(--size-h2) * var(--width-measure-ratio));
   --width-measure-h3: calc(var(--size-h3) * var(--width-measure-ratio));
   --width-measure-h4: calc(var(--size-h4) * var(--width-measure-ratio));
   --width-measure-h5: calc(var(--size-h5) * var(--width-measure-ratio));
-  --width-measure-h6: calc(var(--size-h6) * var(--width-measure-ratio)); */
-
+  --width-measure-h6: calc(var(--size-h6) * var(--width-measure-ratio));
   /* --width-max: ; */ /* already defined in tokens and vars */
 
   /* ----------------------------------------------- */
   /* TODO: better way to handle widths. does not scale nice. see logo on org page */
   /* ----------------------------------------------- */
 
-  /* --width-main: calc(var(--width-max) * var(--width-relative-ratio));
+  --width-main: calc(var(--width-max) * var(--width-relative-ratio));
   --width-aside: calc(var(--width-max) - var(--width-main));
   --width-col-2: calc(var(--width-max) / 2);
   --width-col-3: calc(var(--width-max) / 3);
@@ -151,8 +293,7 @@ body,
   --width-col-13: calc(var(--width-max) / 13);
   --width-col-14: calc(var(--width-max) / 14);
   --width-col-15: calc(var(--width-max) / 15);
-  --width-col-16: calc(var(--width-max) / 16); */
-
+  --width-col-16: calc(var(--width-max) / 16);
   /* --width-min: ; */ /* min block width */
 
   /* gap is for margins, paddings, grid-gap, ... */
@@ -162,13 +303,13 @@ body,
   --gap-l: var(--size-h3);
   --gap-xl: var(--size-h2);
   --gap-xxl: var(--size-h1); */
-  /* --gap-m: var(--size-h4); */
+  --gap-m: var(--size-h4);
   /* --gap: var(--gap-m); */
 
   /* useful vars for layout primitives */
   /* --gutters: var(--gap-m); */
   /* --space: var(--gap-m); */
-  /* --padding: var(--size-relative); */
+  --padding: var(--size-relative);
   /* --width-border: var(--gap-xxs); */
   /* --width-max: var(--gap-xxs); */
   /* --width-min: var(--gap-xxs); */
@@ -178,29 +319,28 @@ body,
   /* --height: var(--gap-xxs); */
   /* --threshold: var(--gap-xxs); */
 
+  --size-border-button: var(--size-h8);
   /* --- Border widths --- */
-  /* --size-border-0: 0;
+  --size-border-0: 0;
   --size-border-s: 1px;
   --size-border-m: var(--size-h8);
-  --size-border-l: var(--size-h6); */
+  --size-border-l: var(--size-h6);
   /* default */
-  /* --size-border: var(--size-border-m); */
-  /* Exceptions */
-  /* --size-border-button: var(--size-h8); */
+  --size-border: var(--size-border-m);
 
   /* --- outline ---
   (Used for :focus. Should probably be fixed for the whole site, whatever the context) */
   /* --size-outline: var(--size-h9); */
-  /* --size-outline: calc(var(--s-14) * 1rem); */
+  --size-outline: calc(var(--s-14) * 1rem);
 
   /* --- Gutters ---
   = lateral paddings */
-  /* --size-gutters-0: 0;
+  --size-gutters-0: 0;
   --size-gutters-s: var(--size-h8);
   --size-gutters-m: var(--size-p);
-  --size-gutters-l: var(--size-h3); */
+  --size-gutters-l: var(--size-h3);
   /* default */
-  /* --size-gutters: var(--size-gutters-m); */
+  --size-gutters: var(--size-gutters-m);
 }
 
 /* 4. ------------------------------------
@@ -210,10 +350,10 @@ We will use "size contexts" to determine the mins and max to use for the compute
 /* CONTEXTS */
 /* Could have defaults of page-structure, prose, ...? */
 
-.s-ctx-main,
+.size-context-main,
 body {
   /* Default sizing for title */
-  /* --size-h-1-max: var(--s12);
+  --size-h-1-max: var(--s12);
   --size-h-1-min: var(--s9);
   --size-h0-max: var(--s9);
   --size-h0-min: var(--s6);
@@ -236,12 +376,12 @@ body {
   --size-h8-max: var(--s-8);
   --size-h8-min: var(--s-12);
   --size-h9-max: var(--s-12);
-  --size-h9-min: var(--s-14); */
+  --size-h9-min: var(--s-14);
 }
 
-.s-ctx-massive {
+.size-context-massive {
   /* Sizing for massive titles in sections */
-  /* --size-h-1-max: var(--s12);
+  --size-h-1-max: var(--s12);
   --size-h-1-min: var(--s12);
   --size-h0-max: var(--s12);
   --size-h0-min: var(--s5);
@@ -264,20 +404,19 @@ body {
   --size-h8-max: var(--s-4);
   --size-h8-min: var(--s-5);
   --size-h9-max: var(--s-5);
-  --size-h9-min: var(--s-6); */
+  --size-h9-min: var(--s-6);
 
   /* We can also override the default use of certain variables */
-  /* Used for :focus */
-  /* --size-outline: calc(var(--s-14) * 1rem); */
+  --size-outline: calc(var(--s-14) * 1rem); /* Used for :focus */
 }
 
-.s-ctx-aside {
-  /* --gap-xl: var(--size-h5);
-  --gap-s: var(--size-s2); */
+.size-context-aside {
+  --gap-xl: var(--size-h5);
+  --gap-s: var(--size-s2);
 }
 
-.s-ctx-miniature {
-  /* --size-h-1-max: var(--s2);
+.size-context-miniature {
+  --size-h-1-max: var(--s2);
   --size-h-1-min: var(--s-1);
   --size-h0-max: var(--s-1);
   --size-h0-min: var(--s-2);
@@ -300,28 +439,28 @@ body {
   --size-h8-max: var(--s-8);
   --size-h8-min: var(--s-8);
   --size-h9-max: var(--s-8);
-  --size-h9-min: var(--s-8); */
+  --size-h9-min: var(--s-8);
 }
 
-.s-ctx-narrow {
-  /* --width-max: var(--width-narrow); */
+.size-context-narrow {
+  --width-max: var(--width-narrow);
 }
 
 /* 5. ------------------------------------
 utility classes to make it easier to apply font-sizes or other dimensions inside a size context */
 
 /* prettier-ignore */
-/* *, .size-h4, .h4, .size-p, .p, .size-h4 *, .h4 *, .size-p *, .p * { font-size: 1rem; font-size: var(--size-h4, 1rem);}
-.size-h-1, .h-1, .size-h-1 *, .h-1 * { font-size: 3rem; font-size: var(--size-h-1, 3rem); }
-.size-h0, .h0, .size-h0 *, .h0 * { font-size: 2.5rem; font-size: var(--size-h0, 2.5rem); }
-h1, h1 *, .size-h1, .h1, .size-h1 *, .h1 * { font-size: 2rem; font-size: var(--size-h1, 2rem); }
-h2, h2 *, .size-h2, .h2, .size-h2 *, .h2 * { font-size: 1.8rem; font-size: var(--size-h2, 1.8rem); }
-h3, h3 *, .size-h3, .h3, .size-h3 *, .h3 * { font-size: 1.5rem; font-size: var(--size-h3, 1.5rem); }
-h5, h5 *, .size-h5, .h5, .size-h5 *, .h5 * { font-size: 0.8rem; font-size: var(--size-h5, 0.8rem); }
-h6, h6 *, .size-h6, .h6, .size-h6 *, .h6 * { font-size: 0.6rem; font-size: var(--size-h6, 0.6rem); }
-.size-h7, .h7, .size-h7 *, .h7 * { font-size: 0.4rem; font-size: var(--size-h7, 0.4rem); }
-.size-h8, .h8, .size-h8 *, .h8 * { font-size: 0.25rem; font-size: var(--size-h8, 0.25rem); }
-.size-h9, .h9, .size-h9 *, .h9 * { font-size: 0.1rem; font-size: var(--size-h9, 0.1rem); } */
+*, .size-h4, .h4, .size-p, .p, .size-h4 *, .h4 *, .size-p *, .p * { font-size: 1rem; font-size: var(--size-h4, 1rem);} /* prettier-ignore */
+.size-h-1, .h-1, .size-h-1 *, .h-1 * { font-size: 3rem; font-size: var(--size-h-1, 3rem); } /* prettier-ignore */
+.size-h0, .h0, .size-h0 *, .h0 * { font-size: 2.5rem; font-size: var(--size-h0, 2.5rem); } /* prettier-ignore */
+h1, h1 *, .size-h1, .h1, .size-h1 *, .h1 * { font-size: 2rem; font-size: var(--size-h1, 2rem); } /* prettier-ignore */
+h2, h2 *, .size-h2, .h2, .size-h2 *, .h2 * { font-size: 1.8rem; font-size: var(--size-h2, 1.8rem); } /* prettier-ignore */
+h3, h3 *, .size-h3, .h3, .size-h3 *, .h3 * { font-size: 1.5rem; font-size: var(--size-h3, 1.5rem); } /* prettier-ignore */
+h5, h5 *, .size-h5, .h5, .size-h5 *, .h5 * { font-size: 0.8rem; font-size: var(--size-h5, 0.8rem); } /* prettier-ignore */
+h6, h6 *, .size-h6, .h6, .size-h6 *, .h6 * { font-size: 0.6rem; font-size: var(--size-h6, 0.6rem); } /* prettier-ignore */
+.size-h7, .h7, .size-h7 *, .h7 * { font-size: 0.4rem; font-size: var(--size-h7, 0.4rem); } /* prettier-ignore */
+.size-h8, .h8, .size-h8 *, .h8 * { font-size: 0.25rem; font-size: var(--size-h8, 0.25rem); } /* prettier-ignore */
+.size-h9, .h9, .size-h9 *, .h9 * { font-size: 0.1rem; font-size: var(--size-h9, 0.1rem); }
 /* prettier-ignore */
 button, .button { border-width: var(--size-border-button) }
 
