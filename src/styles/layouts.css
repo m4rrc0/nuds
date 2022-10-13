@@ -1,3 +1,27 @@
+/* === NUDS Layouts === */
+/* -------- BOX ------------ */
+@custom-selector :--box-l .box, :--box;
+@custom-selector :--no-border-l .no-border, :--no-border;
+/*
+--padding-box: var dimension (fallback to --padding OR --gap/2 OR 0.5em)
+--border-width-box: var dimension (fallback to --border-width OR --size-border OR 1px)
+REMOVED ~~color-light~~
+REMOVED ~~color-dark~~
+*/
+:--box-l {
+  display: block;
+  --padding-box: var(--padding, calc(var(--gap, 1em) / 2));
+  --border-width-box: var(--border-width, var(--size-border, 1px));
+  padding: var(--padding-box);
+  border: var(--border-width-box) solid;
+}
+:--box-l:--no-border-l {
+  border: none;
+  /* For high contrast mode if no border */
+  outline: var(--border-width-box) solid transparent;
+  outline-offset: calc(var(--border-width-box) * -1);
+}
+
 /* -------- STACK ------------ */
 /* TODO: custom selectors do not work if we want to assign a main layout AND modifiers. Ex render: bodybody instead of .stack.recursive*/
 @custom-selector :--stack-l .stack, :--stack;
@@ -64,29 +88,6 @@ NEW: .stop: class bool -> apply `class="stack recursive stop"` to stop recursion
 :--stack-l:--horizontal-l:--recursive-l.stop * + * {
   margin-block-start: 0;
   margin-inline-start: 0;
-}
-
-/* -------- BOX ------------ */
-@custom-selector :--box-l .box, :--box;
-@custom-selector :--no-border-l .no-border, :--no-border;
-/*
---padding-box: var dimension (fallback to --padding OR --gap/2 OR 0.5em)
---border-width-box: var dimension (fallback to --border-width OR --size-border OR 1px)
-REMOVED ~~color-light~~
-REMOVED ~~color-dark~~
-*/
-:--box-l {
-  display: block;
-  --padding-box: var(--padding, calc(var(--gap, 1em) / 2));
-  --border-width-box: var(--border-width, var(--size-border, 1px));
-  padding: var(--padding-box);
-  border: var(--border-width-box) solid;
-}
-:--box-l:--no-border-l {
-  border: none;
-  /* For high contrast mode if no border */
-  outline: var(--border-width-box) solid transparent;
-  outline-offset: calc(var(--border-width-box) * -1);
 }
 
 /* -------- CENTER ------------ */
