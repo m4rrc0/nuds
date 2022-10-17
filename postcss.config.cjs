@@ -16,11 +16,14 @@ module.exports = {
     postcssPresetEnv({
       stage: 0,
       autoprefixer: true,
-      // features: {
-      //   "custom-selectors": {
-      //     preserve: false,
-      //   },
-      // },
+      features: {
+        "logical-properties-and-values": {
+          preserve: true,
+        },
+        // "custom-selectors": {
+        //   preserve: false,
+        // },
+      },
       // importFrom: `nuds/tokens.js`,
       // features: {
       //   'environment-variables': {
