@@ -94,18 +94,21 @@ body,
 :--palette-match *:--selection {
   color: var(--color-text--selection);
   background-color: var(--color-bg--selection);
+  border-color: var(--color-border--selection, currentcolor);
 }
 a,
 a:--palette-match,
 :--palette-match a {
   color: var(--color-text__a);
   background-color: var(--color-bg__a);
+  border-color: var(--color-border__a, currentcolor);
 }
 a:--hover,
 a:--palette-match:--hover,
 :--palette-match a:--hover {
   color: var(--color-text__a--hover);
   background-color: var(--color-bg__a--hover);
+  border-color: var(--color-border__a, currentcolor);
 }
 :--button,
 :--button:--palette-match,
@@ -175,12 +178,12 @@ body *,
     - Focus
     - Disabled */
 
-  --color-alt-theme: var(--color-alt);
+  /* --color-alt-theme: var(--color-alt);
   --color-accent-theme: var(--color-accent);
   --color-muted-theme: var(--color-muted);
   --color-success-theme: var(--color-success);
   --color-warning-theme: var(--color-warning);
-  --color-error-theme: var(--color-error);
+  --color-error-theme: var(--color-error); */
 
   --color-front-theme: var(--color-front); /* prettier-ignore */
   --color-front-alt-theme: var(--color-front-alt, var(--color-alt-theme)); /* prettier-ignore */

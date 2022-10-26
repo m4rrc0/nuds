@@ -73,22 +73,103 @@
   --hsl-blue: 221deg, 55%, 41%;
   --color-blue: hsl(var(--hsl-blue));
   --color-blue-trans: hsla(var(--hsl-blue), 0.8);
+  --color-blue-muted: hsl(221deg, 55%, 15%);
+  --color-blue-lighter: hsl(221deg, 55%, 80%);
   --hsl-teal: 181deg, 100%, 34%;
   --color-teal: hsl(var(--hsl-teal));
+  --color-teal-lighter: hsl(181deg, 100%, 80%);
   --hsl-red: 347, 78%, 60%;
   --color-red: hsl(var(--hsl-red));
+  --color-red-lighter: hsla(347, 78%, 80%, 1);
   --hsl-orange: 19deg, 100%, 64%;
   --color-orange: hsl(var(--hsl-orange));
+  --color-orange-lighter: hsla(19deg, 100%, 80%, 1);
   --hsl-purple: 273deg, 40%, 49%;
   --color-purple: hsl(var(--hsl-purple));
+  --color-purple-lighter: hsl(273deg, 40%, 80%);
   --hsl-green: 111deg, 48%, 54%;
   --color-green: hsl(var(--hsl-green));
+  --color-green-lighter: hsla(111deg, 48%, 80%, 1);
   --color-black: hsl(0, 0%, 7%);
   --color-dark: hsl(0, 0%, 20%);
   --color-grey: hsl(0, 0%, 53%);
 }
 /* --- color PALETTES --- */
 /* ---------------------- */
+
+body,
+.cp-classic {
+  --color-front: var(--color-blue);
+  --color-front-alt: var(--color-purple);
+  --color-front-accent: var(--color-orange);
+  --color-front-muted: var(--color-blue-muted);
+  --color-front-success: var(--color-green);
+  --color-front-warning: var(--color-orange);
+  --color-front-error: var(--color-red);
+  --color-back: var(--color-white);
+  --color-back-alt: var(--color-purple-lighter);
+  --color-back-accent: var(--color-orange-lighter);
+  --color-back-muted: var(--color-blue-lighter);
+  --color-back-success: var(--color-green-lighter);
+  --color-back-warning: var(--color-orange-lighter);
+  --color-back-error: var(--color-red-lighter);
+
+  /* --- DEFAULTS --- */
+  --color-text: var(--color-front-theme);
+  --color-bg: var(--color-back-theme);
+  /* --color-border: var(); */
+  /* --color-outline: var(); */
+  --color-text-decoration: var(--color-front-accent-theme);
+  --color-text-emphasis: var(--color-front-accent-theme);
+  /* --color-shadow has to be used manually in box-shadow definitions */
+  --color-shadow: var(--color-front-muted-theme);
+  /* --color-caret: var(); */
+  /* --color-column-rule: var(); */
+  /* --color-fill: var(); */
+  /* --color-stroke: var(); */
+
+  /* --- FOCUS --- */
+  /* Falls back to --color-outline */
+  /* --color-outline--focus: var(); */
+
+  /* --- SELECTION --- */
+  --color-text--selection: var(--color-back-theme);
+  --color-bg--selection: var(--color-front-accent-theme);
+  --color-border--selection: var(--color-front-accent-theme);
+
+  /* --- A --- */
+  /* --color-text__a: var(--color-text); */
+  /* --color-bg__a: transparent; */
+  /* --color-border__a: transparent; */
+  --color-text__a--hover: var(--color-front-accent-theme);
+  /* --color-bg__a--hover: var(--color-back-theme); */
+  /* --color-border__a--hover: var(--color-back-theme); */
+
+  /* --- BUTTON --- */
+  --color-text__button: var(--color-text);
+  --color-bg__button: var(--color-bg);
+  /* --color-border__button: var(); */
+  /* - hover - */
+  --color-text__button--hover: var(--color-front-accent-theme);
+  --color-bg__button--hover: var(--color-bg);
+  /* --color-border__button--hover: var(); */
+  /* - disabled - */
+  /* --color-text__button--disabled: var(--color-front-accent-theme); */
+  /* --color-bg__button--disabled: var(--color-bg); */
+  /* --color-border__button--disabled: var(); */
+
+  /* --- CODE --- */
+  /* --color-text__code: var(--color-bg); */
+  /* --color-bg__code: var(--color-back-warning-theme); */
+  /* --color-border__code: var(--color-front-theme); */
+
+  /* --- SCROLLBAR --- */
+  /* TODO: this is for the Reel Layout Component */
+  /* --track-color */
+  /* --thumb-color */
+  /*  */
+}
+
 /* :root,
 body,
 .cp-classic,

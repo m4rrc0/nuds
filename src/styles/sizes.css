@@ -26,6 +26,7 @@ the lock is the fluid value
 the size-... is the fluid value bound within a min and max IF the browser supports min/max css functions ELSE it will just be the fluid value
 */
 
+/* ?? Create s-ctx-l, s-ctx-xl, ... where we bump sizes 1 step on the scale ?? */
 body,
 .s-ctx-prose,
 *[class*="s-ctx-"] {
@@ -46,6 +47,20 @@ body,
 }
 .s-ctx-blog {
   --s-h1: var(--s5, 2rem);
+}
+.s-ctx-hero {
+  --s-h1: var(--s6, 2rem);
+  --s-h1: var(--s5, 2rem);
+  --s-h1: var(--s4, 2rem);
+  --s-h1: var(--s3, 2rem);
+  --s-p: var(--s2, 2rem);
+  --padding-left: var(--s-h1);
+  --padding-right: var(--s-h1);
+}
+button,
+.s-ctx-button {
+  --padding-left: var(--s-p);
+  --padding-right: var(--s-p);
 }
 .s-ctx-builder {
   --s-h-3: var(--s11, 4rem);

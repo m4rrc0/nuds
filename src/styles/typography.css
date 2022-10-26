@@ -47,11 +47,11 @@ html {
     "wght" var(--wght), "slnt" var(--slnt), "ital" var(--ital);
 }
 :--headings {
-  line-height: var(--line-height-heading, 1.1);
-  font-weight: 700;
   --wght: 700;
   /* --casl: 0.2; */
   /* --slnt: -2; */
+  line-height: var(--line-height-heading, 1.1);
+  font-weight: var(--wght, 700);
   font-family: var(--font-heading-fallback);
   font-family: var(--font-heading-critical);
   font-family: var(--font-heading-preferred);
