@@ -10,6 +10,37 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+/* Line clamping to a defined number of lines (weirdly well supported) */
+/* From: https://css-tricks.com/line-clampin/ */
+.truncate-lines {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: var(--lines, 3);
+  -webkit-box-orient: vertical;
+}
+/* Line clamping - Alternative method */
+/* From: https://css-tricks.com/line-clampin/ */
+.truncate-lines-overflow {
+  --lines: 3;
+  position: relative;
+  max-height: calc(var(--lh, 1.2em) * var(--lines, 3));
+  overflow: hidden;
+  padding-right: 1rem; /* space for ellipsis */
+}
+.truncate-lines-overflow::before {
+  position: absolute;
+  content: "...";
+  inset-block-end: 0; /* "bottom" */
+  inset-inline-end: 0; /* "right" */
+}
+.truncate-lines-overflow::after {
+  content: "";
+  position: absolute;
+  inset-inline-end: 0; /* "right" */
+  width: 1rem;
+  height: 1rem;
+  background: white;
+}
 
 /* Breakout clickable element. */
 /* As seen here: https://piccalil.li/tutorial/create-a-semantic-break-out-button-to-make-an-entire-element-clickable/ */
