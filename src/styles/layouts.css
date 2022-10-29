@@ -24,10 +24,10 @@ REMOVED ~~color-dark~~
 
 /* -------- STACK ------------ */
 /* TODO: custom selectors do not work if we want to assign a main layout AND modifiers. Ex render: bodybody instead of .stack.recursive*/
-@custom-selector :--stack-l .stack, :--stack;
-@custom-selector :--horizontal-l .horizontal, :--horizontal;
-@custom-selector :--recursive-l .recursive, :--recursive;
-@custom-selector :--split-after-me-l .split-after-me, :--split-after-me;
+@custom-selector :--stack-l .stack;
+@custom-selector :--horizontal-l .horizontal;
+@custom-selector :--recursive-l .recursive;
+@custom-selector :--split-after-me-l .split-after-me;
 /*
 --gap-stack: var dimension (fallback to --gap OR 1em)
 .recursive: class bool
