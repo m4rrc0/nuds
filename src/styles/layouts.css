@@ -1,21 +1,21 @@
 /* === NUDS Layouts === */
 /* -------- BOX ------------ */
-@custom-selector :--box-l .box, :--box;
-@custom-selector :--no-border-l .no-border, :--no-border;
+@custom-selector :--box .box;
+@custom-selector :--no-border .no-border;
 /*
 --padding-box: var dimension (fallback to --padding OR --gap/2 OR 0.5em)
 --border-width-box: var dimension (fallback to --border-width OR --size-border OR 1px)
 REMOVED ~~color-light~~
 REMOVED ~~color-dark~~
 */
-:--box-l {
+:--box {
   display: block;
   --padding-box: var(--padding, calc(var(--gap, 1em) / 2));
   --border-width-box: var(--border-width, var(--size-border, 1px));
   padding: var(--padding-box);
   border: var(--border-width-box) solid;
 }
-:--box-l:--no-border-l {
+:--box:--no-border {
   border: none;
   /* For high contrast mode if no border */
   outline: var(--border-width-box) solid transparent;
@@ -24,10 +24,10 @@ REMOVED ~~color-dark~~
 
 /* -------- STACK ------------ */
 /* TODO: custom selectors do not work if we want to assign a main layout AND modifiers. Ex render: bodybody instead of .stack.recursive*/
-@custom-selector :--stack-l .stack;
-@custom-selector :--horizontal-l .horizontal;
-@custom-selector :--recursive-l .recursive;
-@custom-selector :--split-after-me-l .split-after-me;
+@custom-selector :--stack .stack;
+@custom-selector :--horizontal .horizontal;
+@custom-selector :--recursive .recursive;
+@custom-selector :--split-after-me .split-after-me;
 /*
 --gap-stack: var dimension (fallback to --gap OR 1em)
 .recursive: class bool
@@ -36,71 +36,71 @@ NEW: .split-after-me: class -> to specify after which element we want to split
 NEW: .horizontal: class bool
 NEW: .stop: class bool -> apply `class="stack recursive stop"` to stop recursion down this path
 */
-:--stack-l {
+:--stack {
   --gap-stack: var(--gap, 1em);
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
 }
-:--stack-l:not(:--horizontal-l) > *,
-:--stack-l:--recursive-l:not(:--horizontal-l) * {
+:--stack:not(:--horizontal) > *,
+:--stack:--recursive:not(:--horizontal) * {
   margin-block: 0;
 }
-:--stack-l:not(:--horizontal-l) > * + *,
-:--stack-l:--recursive-l:not(:--horizontal-l) * + * {
+:--stack:not(:--horizontal) > * + *,
+:--stack:--recursive:not(:--horizontal) * + * {
   margin-block-start: var(--gap-stack);
 }
-:--stack-l:not(:--horizontal-l):only-child {
+:--stack:not(:--horizontal):only-child {
   block-size: 100%;
 }
 /* horizontal mod */
-:--stack-l:--horizontal-l {
+:--stack:--horizontal {
   flex-direction: row;
   align-items: center;
 }
-:--stack-l:--horizontal-l > *,
-:--stack-l:--horizontal-l:--recursive-l * {
+:--stack:--horizontal > *,
+:--stack:--horizontal:--recursive * {
   margin-inline: 0;
 }
-:--stack-l:--horizontal-l > * + *,
-:--stack-l:--horizontal-l:--recursive-l * + * {
+:--stack:--horizontal > * + *,
+:--stack:--horizontal:--recursive * + * {
   margin-inline-start: var(--gap-stack);
 }
-:--stack-l:--horizontal-l:only-child {
+:--stack:--horizontal:only-child {
   inline-size: 100%;
 }
 /* split-after */ /* prettier-ignore */
-:--stack-l:not(:--horizontal-l) > :--split-after-me-l { margin-block-end: auto; } /* prettier-ignore */
-:--stack-l:--horizontal-l > :--split-after-me-l { margin-inline-end: auto; } /* prettier-ignore */
-:--stack-l:not(:--horizontal-l).split-after-1 > :nth-child(1) { margin-block-end: auto; } /* prettier-ignore */
-:--stack-l:--horizontal-l.split-after-1 > :nth-child(1) { margin-inline-end: auto; } /* prettier-ignore */
-:--stack-l:not(:--horizontal-l).split-after-2 > :nth-child(2) { margin-block-end: auto; } /* prettier-ignore */
-:--stack-l:--horizontal-l.split-after-2 > :nth-child(2) { margin-inline-end: auto; } /* prettier-ignore */
-:--stack-l:not(:--horizontal-l).split-after-3 > :nth-child(3) { margin-block-end: auto; } /* prettier-ignore */
-:--stack-l:--horizontal-l.split-after-3 > :nth-child(3) { margin-inline-end: auto; } /* prettier-ignore */
-:--stack-l:not(:--horizontal-l).split-after-4 > :nth-child(4) { margin-block-end: auto; } /* prettier-ignore */
-:--stack-l:--horizontal-l.split-after-4 > :nth-child(4) { margin-inline-end: auto; } /* prettier-ignore */
-:--stack-l:not(:--horizontal-l).split-after-5 > :nth-child(5) { margin-block-end: auto; } /* prettier-ignore */
-:--stack-l:--horizontal-l.split-after-5 > :nth-child(5) { margin-inline-end: auto; } /* prettier-ignore */
+:--stack:not(:--horizontal) > :--split-after-me { margin-block-end: auto; } /* prettier-ignore */
+:--stack:--horizontal > :--split-after-me { margin-inline-end: auto; } /* prettier-ignore */
+:--stack:not(:--horizontal).split-after-1 > :nth-child(1) { margin-block-end: auto; } /* prettier-ignore */
+:--stack:--horizontal.split-after-1 > :nth-child(1) { margin-inline-end: auto; } /* prettier-ignore */
+:--stack:not(:--horizontal).split-after-2 > :nth-child(2) { margin-block-end: auto; } /* prettier-ignore */
+:--stack:--horizontal.split-after-2 > :nth-child(2) { margin-inline-end: auto; } /* prettier-ignore */
+:--stack:not(:--horizontal).split-after-3 > :nth-child(3) { margin-block-end: auto; } /* prettier-ignore */
+:--stack:--horizontal.split-after-3 > :nth-child(3) { margin-inline-end: auto; } /* prettier-ignore */
+:--stack:not(:--horizontal).split-after-4 > :nth-child(4) { margin-block-end: auto; } /* prettier-ignore */
+:--stack:--horizontal.split-after-4 > :nth-child(4) { margin-inline-end: auto; } /* prettier-ignore */
+:--stack:not(:--horizontal).split-after-5 > :nth-child(5) { margin-block-end: auto; } /* prettier-ignore */
+:--stack:--horizontal.split-after-5 > :nth-child(5) { margin-inline-end: auto; } /* prettier-ignore */
 /* --- ... --- */
 
-:--stack-l:not(:--horizontal-l):--recursive-l.stop * + *,
-:--stack-l:--horizontal-l:--recursive-l.stop * + * {
+:--stack:not(:--horizontal):--recursive.stop * + *,
+:--stack:--horizontal:--recursive.stop * + * {
   margin-block-start: 0;
   margin-inline-start: 0;
 }
 
 /* -------- CENTER ------------ */
-@custom-selector :--center-l .center, :--center;
-@custom-selector :--text-l .text, :--text;
-@custom-selector :--intrinsic-l .intrinsic, :--intrinsic;
+@custom-selector :--center .center;
+@custom-selector :--text .text;
+@custom-selector :--intrinsic .intrinsic;
 /*
 --max-width: var dimension (fallback to --width-max OR --measure OR 60ch)
 .text: class bool
 --gutters-center: var dimension (fallback to --padding OR --gap/2 OR 0.5em)
 .intrinsic: class bool
 */
-:--center-l {
+:--center {
   --gutters-center: var(--padding, calc(var(--gap, 1em) / 2));
   display: block;
   box-sizing: content-box;
@@ -108,15 +108,15 @@ NEW: .stop: class bool -> apply `class="stack recursive stop"` to stop recursion
   max-inline-size: var(--max-width, var(--width-max, var(--measure, 60ch)));
   padding-inline: var(--gutters-center);
 }
-:--center-l:--text-l {
+:--center:--text {
   text-align: center;
 }
-:--center-l:--intrinsic-l {
+:--center:--intrinsic {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-/* :--center-l.max {
+/* :--center.max {
   inline-size: 100%;
 
   width: var(--max-width, var(--width-max, var(--measure, 60ch)));
@@ -124,13 +124,13 @@ NEW: .stop: class bool -> apply `class="stack recursive stop"` to stop recursion
 } */
 
 /* -------- CLUSTER ------------ */
-@custom-selector :--cluster-l .cluster, :--cluster;
+@custom-selector :--cluster .cluster;
 /*
 --gap-cluster: var dimension (fallback to --gap OR 1em)
 --justify-cluster: var keyword -> for horizontal alignment (fallback to flex-start)
 --align-cluster: var keyword -> for vertical alignment (fallback to center)
 */
-:--cluster-l {
+:--cluster {
   --gap-cluster: var(--gap, 1em);
   --justify-cluster: flex-start;
   --align-cluster: center;
@@ -155,8 +155,8 @@ NEW: .stop: class bool -> apply `class="stack recursive stop"` to stop recursion
 /* .cluster.split-after-1 > * > :nth-child(1) { margin-right: auto; } /* prettier-ignore */
 
 /* -------- WITH SIDEBAR ------------ */
-@custom-selector :--with-sidebar-l .with-sidebar, :--with-sidebar;
-@custom-selector :--right-l .right, :--right;
+@custom-selector :--with-sidebar .with-sidebar;
+@custom-selector :--right .right;
 /*
 --gap-sidebar: var dimension (fallback to --gap OR 1em)
 --width-sidebar: var dimension | The width of the sidebar (empty means not set; defaults to the content width)
@@ -165,38 +165,38 @@ NEW: .stop: class bool -> apply `class="stack recursive stop"` to stop recursion
 */
 /* TODO: Find method to change order of element when they wrap 
 -> ?? can we use dir: rtl; to swap the order of elements when they wrap?? */
-:--with-sidebar-l {
+:--with-sidebar {
   --gap-sidebar: var(--gap, 1em);
   display: flex;
   flex-wrap: wrap;
   gap: var(--gap-sidebar);
 }
-:--with-sidebar-l:not(:--right-l) > :first-child,
-:--with-sidebar-l:--right-l > :last-child {
+:--with-sidebar:not(:--right) > :first-child,
+:--with-sidebar:--right > :last-child {
   flex-basis: var(--width-sidebar);
   flex-grow: 1;
 }
-:--with-sidebar-l:not(:--right-l) > :last-child,
-:--with-sidebar-l:--right-l > :first-child {
+:--with-sidebar:not(:--right) > :last-child,
+:--with-sidebar:--right > :first-child {
   flex-basis: 0;
   flex-grow: 999;
   min-inline-size: var(--content-min, 50%);
 }
 
 /* -------- SWITCHER ------------ */
-@custom-selector :--switcher-l .switcher, :--switcher;
+@custom-selector :--switcher .switcher;
 /*
 --gap-switcher: var dimension | The space (margin) between the (child) elements (fallback to --gap OR 1em)
 --width-wrap: var dimension | The container width at which the component switches between a horizontal and vertical layout
 .limit-[x]: class -> x = int (1 < x < 9) | The maximum number of elements allowed to appear in the horizontal configuration
 */
-:--switcher-l {
+:--switcher {
   --gap-switcher: var(--gap, 1em);
   display: flex;
   flex-wrap: wrap;
   gap: var(--gap-switcher);
 }
-:--switcher-l > * {
+:--switcher > * {
   flex-grow: 1;
   /* TODO: is 30rem a good default? */
   flex-basis: calc((var(--width-wrap, 30rem) - 100%) * 999);
@@ -206,44 +206,44 @@ NEW: .stop: class bool -> apply `class="stack recursive stop"` to stop recursion
   ); */
 }
 /* prettier-ignore */
-:--switcher-l.limit-2 > :nth-last-child(n+3), :--switcher-l.limit-2 > :nth-last-child(n+3) ~ * { flex-basis: 100%; } /* prettier-ignore */
-:--switcher-l.limit-3 > :nth-last-child(n+4), :--switcher-l.limit-3 > :nth-last-child(n+4) ~ * { flex-basis: 100%; } /* prettier-ignore */
-:--switcher-l.limit-4 > :nth-last-child(n+5), :--switcher-l.limit-4 > :nth-last-child(n+5) ~ * { flex-basis: 100%; } /* prettier-ignore */
-:--switcher-l.limit-5 > :nth-last-child(n+6), :--switcher-l.limit-5 > :nth-last-child(n+6) ~ * { flex-basis: 100%; } /* prettier-ignore */
-:--switcher-l.limit-6 > :nth-last-child(n+7), :--switcher-l.limit-6 > :nth-last-child(n+7) ~ * { flex-basis: 100%; } /* prettier-ignore */
-:--switcher-l.limit-7 > :nth-last-child(n+8), :--switcher-l.limit-7 > :nth-last-child(n+8) ~ * { flex-basis: 100%; } /* prettier-ignore */
-:--switcher-l.limit-8 > :nth-last-child(n+9), :--switcher-l.limit-8 > :nth-last-child(n+9) ~ * { flex-basis: 100%; } /* prettier-ignore */
+:--switcher.limit-2 > :nth-last-child(n+3), :--switcher.limit-2 > :nth-last-child(n+3) ~ * { flex-basis: 100%; } /* prettier-ignore */
+:--switcher.limit-3 > :nth-last-child(n+4), :--switcher.limit-3 > :nth-last-child(n+4) ~ * { flex-basis: 100%; } /* prettier-ignore */
+:--switcher.limit-4 > :nth-last-child(n+5), :--switcher.limit-4 > :nth-last-child(n+5) ~ * { flex-basis: 100%; } /* prettier-ignore */
+:--switcher.limit-5 > :nth-last-child(n+6), :--switcher.limit-5 > :nth-last-child(n+6) ~ * { flex-basis: 100%; } /* prettier-ignore */
+:--switcher.limit-6 > :nth-last-child(n+7), :--switcher.limit-6 > :nth-last-child(n+7) ~ * { flex-basis: 100%; } /* prettier-ignore */
+:--switcher.limit-7 > :nth-last-child(n+8), :--switcher.limit-7 > :nth-last-child(n+8) ~ * { flex-basis: 100%; } /* prettier-ignore */
+:--switcher.limit-8 > :nth-last-child(n+9), :--switcher.limit-8 > :nth-last-child(n+9) ~ * { flex-basis: 100%; } /* prettier-ignore */
 
 /* -------- COVER ------------ */
-@custom-selector :--cover-l .cover, :--cover;
-@custom-selector :--no-padding-l .no-padding, :--no-padding;
-@custom-selector :--centered-l .centered, :--centered;
+@custom-selector :--cover .cover;
+@custom-selector :--no-padding .no-padding;
+@custom-selector :--centered .centered;
 /*
 --gap-cover: var dimension | The minimum space between and around the child elements
 --min-height-cover: var dimension (100vh) | The minimum height of the parent element, before it grows to accommodate its content
 .no-padding: class bool  (false) | Whether to remove the padding from the parent element
 NEW: .centered | place a ".centered" class on the child that needs centering
 */
-:--cover-l {
+:--cover {
   --gap-cover: var(--gap, 1em);
   display: flex;
   flex-direction: column;
   min-block-size: var(--min-height-cover, 100vh);
   padding: var(--gap-cover);
 }
-:--cover-l:--no-padding-l {
+:--cover:--no-padding {
   padding: 0;
 }
-:--cover-l > * {
+:--cover > * {
   margin-block: var(--gap-cover);
 }
-:--cover-l > :first-child:not(:--centered-l) {
+:--cover > :first-child:not(:--centered) {
   margin-block-start: 0;
 }
-:--cover-l > :last-child:not(:--centered-l) {
+:--cover > :last-child:not(:--centered) {
   margin-block-end: 0;
 }
-:--cover-l > :--centered-l {
+:--cover > :--centered {
   margin-block: auto;
 }
 /* TODO: do this with a mixin and/or function if we need it */ /*
@@ -252,12 +252,12 @@ NEW: .centered | place a ".centered" class on the child that needs centering
 */
 
 /* -------- GRID ------------ */
-@custom-selector :--grid-l .grid, :--grid;
+@custom-selector :--grid .grid;
 /* 
 --gap-grid: var dimension | The space (margin) between the (child) elements (fallback to --gap OR 1em)
 --width-column-min: var dimension -> minimum col width (or flex-basis if in flex mode)
 */
-:--grid-l {
+:--grid {
   --gap-grid: var(--gap, 1em);
   display: grid;
   grid-gap: var(--gap-grid);
@@ -265,7 +265,7 @@ NEW: .centered | place a ".centered" class on the child that needs centering
 /* TODO: What is a good default? Every Layout's website set 250px by default. I had 10rem in V1. */
 /* @supports (width: min(var(--width-column-min, 250px), 100%)) { */
 @supports (width: min(var(--width-column-min, 10rem), 100%)) {
-  :--grid-l {
+  :--grid {
     /* grid-template-columns: repeat(auto-fit, minmax(min(var(--width-column-min, 250px), 100%), 1fr)); */
     grid-template-columns: repeat(
       auto-fit,
@@ -276,8 +276,8 @@ NEW: .centered | place a ".centered" class on the child that needs centering
 
 /* -------- FRAME ------------ */
 /* TODO HERE */
-@custom-selector :--frame-l .frame, :--frame;
-@custom-selector :--frame-inner-l .frame-inner, img, video, :--frame-inner;
+@custom-selector :--frame .frame;
+@custom-selector :--frame-inner .frame-inner, img, video;
 /*
 --n: var int -> numerator
 --d: var int -> denominator
@@ -285,7 +285,7 @@ NEW: --aspect-ratio: var number or fraction (16/9) | The element's aspect ratio
 NEW: --object-fit-frame: var keyword
 */
 
-:--frame-l {
+:--frame {
   --n: 16;
   --d: 9;
   aspect-ratio: var(--n) / var(--d);
@@ -296,17 +296,17 @@ NEW: --object-fit-frame: var keyword
   justify-content: center;
   align-items: center;
 }
-:--frame-l > :--frame-inner-l {
+:--frame > :--frame-inner {
   inline-size: 100%;
   block-size: 100%;
   object-fit: var(--object-fit-frame, cover);
 }
 
 /* -------- REEL ------------ */
-@custom-selector :--reel-l .reel, :--reel;
-@custom-selector :--overflowing-l .overflowing, :--overflowing;
-@custom-selector :--no-bar-l .no-bar, :--no-bar;
-@custom-selector :--no-js-l .no-js, :--no-js;
+@custom-selector :--reel .reel;
+@custom-selector :--overflowing .overflowing;
+@custom-selector :--no-bar .no-bar;
+@custom-selector :--no-js .no-js;
 /*
 --item-width: var dimension or keyword (auto) | The width of each child element
 --height: var dimension or keyword (auto) | The height of the parent (Reel) element
@@ -320,7 +320,7 @@ NEW: .no-js: class bool (false) | Wether the observer has been setup to manage t
 /* TODO: ? implement background attachment local for affordance instead. http://lea.verou.me/2012/04/background-attachment-local/ */
 /* TODO: ? should --thumb-color have a fallback? */
 
-:--reel-l {
+:--reel {
   --gap-reel: var(--gap, 1em);
   display: flex;
   block-size: var(--height, auto);
@@ -329,40 +329,40 @@ NEW: .no-js: class bool (false) | Wether the observer has been setup to manage t
   scrollbar-color: var(--thumb-color) var(--track-color, currentcolor);
 }
 /* NEW */
-:--reel-l:--no-bar-l {
+:--reel:--no-bar {
   scrollbar-width: none;
 }
-:--reel-l > * {
+:--reel > * {
   flex: 0 0 var(--item-width, auto);
 }
 /* TODO: decide if we expand this selector */
-/* :--reel-l > .img,
-:--reel-l > .image, */
-:--reel-l > img {
+/* :--reel > .img,
+:--reel > .image, */
+:--reel > img {
   block-size: 100%;
   flex-basis: auto;
   /* ?? Shouldn't it be inline-size: auto; */
   width: auto;
 }
-:--reel-l > * + * {
+:--reel > * + * {
   margin-inline-start: var(--gap-reel);
 }
-:--reel-l:--overflowing-l:not(:--no-bar-l),
-:--reel-l:--no-js-l:not(:--no-bar-l) {
+:--reel:--overflowing:not(:--no-bar),
+:--reel:--no-js:not(:--no-bar) {
   padding-block-end: var(--gap-reel);
 }
 /* TODO: NEW -> part of nuds-colors. should we set defaults and override in nuds-colors? */
-:--reel-l::-webkit-scrollbar {
+:--reel::-webkit-scrollbar {
   block-size: 1rem; /* NOTE: shouldn't it be --gap-reel instead ? */
 }
 /* NEW */
-:--reel-l:--no-bar-l::-webkit-scrollbar {
+:--reel:--no-bar::-webkit-scrollbar {
   display: none;
 }
-:--reel-l::-webkit-scrollbar-track {
+:--reel::-webkit-scrollbar-track {
   background-color: var(--track-color, currentcolor);
 }
-:--reel-l::-webkit-scrollbar-thumb {
+:--reel::-webkit-scrollbar-thumb {
   background-color: var(--track-color, currentcolor);
   background-image: linear-gradient(
     var(--track-color, currentcolor) 0,
@@ -374,39 +374,39 @@ NEW: .no-js: class bool (false) | Wether the observer has been setup to manage t
 }
 
 /* -------- IMPOSTER ------------ */
-@custom-selector :--imposter-l .imposter, :--imposter;
-@custom-selector :--fixed-l .fixed, :--fixed;
-@custom-selector :--breakout-l .breakout, :--breakout;
+@custom-selector :--imposter .imposter;
+@custom-selector :--fixed .fixed;
+@custom-selector :--breakout .breakout;
 /* 
 --margin-imposter: var dimension
 .fixed: class bool | to position the imposter relatve to the viewport
 NEW: --position-imposter: var keyword | alternative positionning. overrides the .fixed class
 .breakout: class bool | Whether the element is allowed to break out of the container over which it is positioned
 */
-:--imposter-l {
+:--imposter {
   display: block;
   position: var(--position-imposter, absolute);
   inset-block-start: 50%;
   inset-inline-start: 50%;
   transform: translate(-50%, -50%);
 }
-:--imposter-l:not(:--breakout-l) {
+:--imposter:not(:--breakout) {
   --margin-imposter: 0px;
   overflow: auto;
   max-inline-size: calc(100% - (var(--margin-imposter) * 2));
   max-block-size: calc(100% - (var(--margin-imposter) * 2));
 }
-:--imposter-l:--fixed-l {
+:--imposter:--fixed {
   position: var(--position-imposter, fixed);
 }
 
 /* -------- ICON ------------ */
-@custom-selector :--icon-l .icon, :--icon;
-@custom-selector :--lowercase-l .lowercase, :--lowercase;
-@custom-selector :--with-icon-l .with-icon, :--with-icon;
-@custom-selector :--right-l .right, :--right;
-@custom-selector :--super-l .super, :--super;
-@custom-selector :--sub-l .sub, :--sub;
+@custom-selector :--icon .icon;
+@custom-selector :--lowercase .lowercase;
+@custom-selector :--with-icon .with-icon;
+@custom-selector :--right .right;
+@custom-selector :--super .super;
+@custom-selector :--sub .sub;
 /* 
 --width-icon: var length
 --height-icon: var length
@@ -417,7 +417,7 @@ NEW: --position-imposter: var keyword | alternative positionning. overrides the 
 .sub: class bool
 REMARK: .icon can be used alone if we don't need to control over space between icon and text
 */
-:--icon-l {
+:--icon {
   /* Usually 0.75em more closely matches uppercase letter height */
   width: var(--width-icon, 0.75em);
   /* 1cap = nominal height of capital letters of the element's font */
@@ -426,8 +426,8 @@ REMARK: .icon can be used alone if we don't need to control over space between i
   height: var(--height-icon, 1cap);
   vertical-align: var(--vertical-align-icon, baseline);
 }
-:--icon-l:--lowercase-l,
-:--lowercase-l > :--icon-l {
+:--icon:--lowercase,
+:--lowercase > :--icon {
   /* TODO: ?is this a good default? */
   width: var(--width-icon, 0.6em);
   /* matches lowercase height of "x" */
@@ -435,34 +435,34 @@ REMARK: .icon can be used alone if we don't need to control over space between i
   height: var(--height-icon, 0.6em);
   height: var(--height-icon, 1ex);
 }
-:--icon-l:--sub-l,
-:--icon-l:--super-l,
-:--super-l > :--icon-l,
-:--sub-l > :--icon-l {
+:--icon:--sub,
+:--icon:--super,
+:--super > :--icon,
+:--sub > :--icon {
   /* TODO: ?is this a good default? */
   width: var(--width-icon, 0.25em);
   height: var(--height-icon, 0.25em);
 }
-:--icon-l:--sub-l,
-:--sub-l > :--icon-l {
+:--icon:--sub,
+:--sub > :--icon {
   vertical-align: var(--vertical-align-icon, sub);
 }
-:--icon-l:--super-l,
-:--super-l > :--icon-l {
+:--icon:--super,
+:--super > :--icon {
   vertical-align: var(--vertical-align-icon, super);
 }
-:--with-icon-l {
+:--with-icon {
   display: inline-flex;
   align-items: baseline;
 }
-:--with-icon-l:--lowercase-l {
+:--with-icon:--lowercase {
   text-transform: lowercase;
 }
-:--with-icon-l:not(:--right-l) :--icon-l {
+:--with-icon:not(:--right) :--icon {
   margin-inline-end: var(--gap-icon, 1rem);
   margin-inline-end: var(--gap-icon, 1ch);
 }
-:--with-icon-l:--right-l :--icon-l {
+:--with-icon:--right :--icon {
   margin-inline-start: var(--gap-icon, 1rem);
   margin-inline-start: var(--gap-icon, 1ch);
 }
