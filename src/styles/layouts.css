@@ -2,6 +2,7 @@
 /* -------- BOX ------------ */
 @custom-selector :--box .box;
 @custom-selector :--no-border .no-border;
+@custom-selector :--box-no-border .box.no-border;
 /*
 --padding-box: var dimension (fallback to --padding OR --gap/2 OR 0.5em)
 --border-width-box: var dimension (fallback to --border-width OR --size-border OR 1px)
@@ -15,7 +16,7 @@ REMOVED ~~color-dark~~
   padding: var(--padding-box);
   border: var(--border-width-box) solid;
 }
-:--box:--no-border {
+:--box-no-border {
   border: none;
   /* For high contrast mode if no border */
   outline: var(--border-width-box) solid transparent;
@@ -28,6 +29,9 @@ REMOVED ~~color-dark~~
 @custom-selector :--horizontal .horizontal;
 @custom-selector :--recursive .recursive;
 @custom-selector :--split-after-me .split-after-me;
+@custom-selector :--stack-recursive .stack.recursive;
+@custom-selector :--stack-horizontal .stack.horizontal;
+@custom-selector :--stack-horizontal-recursive .stack.horizontal.recursive;
 /*
 --gap-stack: var dimension (fallback to --gap OR 1em)
 .recursive: class bool
@@ -43,49 +47,49 @@ NEW: .stop: class bool -> apply `class="stack recursive stop"` to stop recursion
   justify-content: flex-start;
 }
 :--stack:not(:--horizontal) > *,
-:--stack:--recursive:not(:--horizontal) * {
+:--stack-recursive:not(:--horizontal) * {
   margin-block: 0;
 }
 :--stack:not(:--horizontal) > * + *,
-:--stack:--recursive:not(:--horizontal) * + * {
+:--stack-recursive:not(:--horizontal) * + * {
   margin-block-start: var(--gap-stack);
 }
 :--stack:not(:--horizontal):only-child {
   block-size: 100%;
 }
 /* horizontal mod */
-:--stack:--horizontal {
+:--stack-horizontal {
   flex-direction: row;
   align-items: center;
 }
-:--stack:--horizontal > *,
-:--stack:--horizontal:--recursive * {
+:--stack-horizontal > *,
+:--stack-horizontal-recursive * {
   margin-inline: 0;
 }
-:--stack:--horizontal > * + *,
-:--stack:--horizontal:--recursive * + * {
+:--stack-horizontal > * + *,
+:--stack-horizontal-recursive * + * {
   margin-inline-start: var(--gap-stack);
 }
-:--stack:--horizontal:only-child {
+:--stack-horizontal:only-child {
   inline-size: 100%;
 }
 /* split-after */ /* prettier-ignore */
 :--stack:not(:--horizontal) > :--split-after-me { margin-block-end: auto; } /* prettier-ignore */
-:--stack:--horizontal > :--split-after-me { margin-inline-end: auto; } /* prettier-ignore */
+:--stack-horizontal > :--split-after-me { margin-inline-end: auto; } /* prettier-ignore */
 :--stack:not(:--horizontal).split-after-1 > :nth-child(1) { margin-block-end: auto; } /* prettier-ignore */
-:--stack:--horizontal.split-after-1 > :nth-child(1) { margin-inline-end: auto; } /* prettier-ignore */
+:--stack-horizontal.split-after-1 > :nth-child(1) { margin-inline-end: auto; } /* prettier-ignore */
 :--stack:not(:--horizontal).split-after-2 > :nth-child(2) { margin-block-end: auto; } /* prettier-ignore */
-:--stack:--horizontal.split-after-2 > :nth-child(2) { margin-inline-end: auto; } /* prettier-ignore */
+:--stack-horizontal.split-after-2 > :nth-child(2) { margin-inline-end: auto; } /* prettier-ignore */
 :--stack:not(:--horizontal).split-after-3 > :nth-child(3) { margin-block-end: auto; } /* prettier-ignore */
-:--stack:--horizontal.split-after-3 > :nth-child(3) { margin-inline-end: auto; } /* prettier-ignore */
+:--stack-horizontal.split-after-3 > :nth-child(3) { margin-inline-end: auto; } /* prettier-ignore */
 :--stack:not(:--horizontal).split-after-4 > :nth-child(4) { margin-block-end: auto; } /* prettier-ignore */
-:--stack:--horizontal.split-after-4 > :nth-child(4) { margin-inline-end: auto; } /* prettier-ignore */
+:--stack-horizontal.split-after-4 > :nth-child(4) { margin-inline-end: auto; } /* prettier-ignore */
 :--stack:not(:--horizontal).split-after-5 > :nth-child(5) { margin-block-end: auto; } /* prettier-ignore */
-:--stack:--horizontal.split-after-5 > :nth-child(5) { margin-inline-end: auto; } /* prettier-ignore */
+:--stack-horizontal.split-after-5 > :nth-child(5) { margin-inline-end: auto; } /* prettier-ignore */
 /* --- ... --- */
 
 :--stack:not(:--horizontal):--recursive.stop * + *,
-:--stack:--horizontal:--recursive.stop * + * {
+:--stack-horizontal-recursive.stop * + * {
   margin-block-start: 0;
   margin-inline-start: 0;
 }
@@ -94,6 +98,8 @@ NEW: .stop: class bool -> apply `class="stack recursive stop"` to stop recursion
 @custom-selector :--center .center;
 @custom-selector :--text .text;
 @custom-selector :--intrinsic .intrinsic;
+@custom-selector :--center-text .center.text;
+@custom-selector :--center-intrinsic .center.intrinsic;
 /*
 --max-width: var dimension (fallback to --width-max OR --measure OR 60ch)
 .text: class bool
@@ -108,10 +114,10 @@ NEW: .stop: class bool -> apply `class="stack recursive stop"` to stop recursion
   max-inline-size: var(--max-width, var(--width-max, var(--measure, 60ch)));
   padding-inline: var(--gutters-center);
 }
-:--center:--text {
+:--center-text {
   text-align: center;
 }
-:--center:--intrinsic {
+:--center-intrinsic {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -157,6 +163,7 @@ NEW: .stop: class bool -> apply `class="stack recursive stop"` to stop recursion
 /* -------- WITH SIDEBAR ------------ */
 @custom-selector :--with-sidebar .with-sidebar;
 @custom-selector :--right .right;
+@custom-selector :--with-sidebar-right .with-sidebar.right;
 /*
 --gap-sidebar: var dimension (fallback to --gap OR 1em)
 --width-sidebar: var dimension | The width of the sidebar (empty means not set; defaults to the content width)
@@ -172,12 +179,12 @@ NEW: .stop: class bool -> apply `class="stack recursive stop"` to stop recursion
   gap: var(--gap-sidebar);
 }
 :--with-sidebar:not(:--right) > :first-child,
-:--with-sidebar:--right > :last-child {
+:--with-sidebar-right > :last-child {
   flex-basis: var(--width-sidebar);
   flex-grow: 1;
 }
 :--with-sidebar:not(:--right) > :last-child,
-:--with-sidebar:--right > :first-child {
+:--with-sidebar-right > :first-child {
   flex-basis: 0;
   flex-grow: 999;
   min-inline-size: var(--content-min, 50%);
@@ -185,6 +192,13 @@ NEW: .stop: class bool -> apply `class="stack recursive stop"` to stop recursion
 
 /* -------- SWITCHER ------------ */
 @custom-selector :--switcher .switcher;
+@custom-selector :--switcher-limit-2 .switcher.limit-2;
+@custom-selector :--switcher-limit-3 .switcher.limit-3;
+@custom-selector :--switcher-limit-4 .switcher.limit-4;
+@custom-selector :--switcher-limit-5 .switcher.limit-5;
+@custom-selector :--switcher-limit-6 .switcher.limit-6;
+@custom-selector :--switcher-limit-7 .switcher.limit-7;
+@custom-selector :--switcher-limit-8 .switcher.limit-8;
 /*
 --gap-switcher: var dimension | The space (margin) between the (child) elements (fallback to --gap OR 1em)
 --grow-switcher: var int | Should children grow?
@@ -207,18 +221,19 @@ NEW: .stop: class bool -> apply `class="stack recursive stop"` to stop recursion
   ); */
 }
 /* prettier-ignore */
-:--switcher.limit-2 > :nth-last-child(n+3), :--switcher.limit-2 > :nth-last-child(n+3) ~ * { flex-basis: 100%; } /* prettier-ignore */
-:--switcher.limit-3 > :nth-last-child(n+4), :--switcher.limit-3 > :nth-last-child(n+4) ~ * { flex-basis: 100%; } /* prettier-ignore */
-:--switcher.limit-4 > :nth-last-child(n+5), :--switcher.limit-4 > :nth-last-child(n+5) ~ * { flex-basis: 100%; } /* prettier-ignore */
-:--switcher.limit-5 > :nth-last-child(n+6), :--switcher.limit-5 > :nth-last-child(n+6) ~ * { flex-basis: 100%; } /* prettier-ignore */
-:--switcher.limit-6 > :nth-last-child(n+7), :--switcher.limit-6 > :nth-last-child(n+7) ~ * { flex-basis: 100%; } /* prettier-ignore */
-:--switcher.limit-7 > :nth-last-child(n+8), :--switcher.limit-7 > :nth-last-child(n+8) ~ * { flex-basis: 100%; } /* prettier-ignore */
-:--switcher.limit-8 > :nth-last-child(n+9), :--switcher.limit-8 > :nth-last-child(n+9) ~ * { flex-basis: 100%; } /* prettier-ignore */
+:--switcher-limit-2 > :nth-last-child(n+3), :--switcher-limit-2 > :nth-last-child(n+3) ~ * { flex-basis: 100%; } /* prettier-ignore */
+:--switcher-limit-3 > :nth-last-child(n+4), :--switcher-limit-3 > :nth-last-child(n+4) ~ * { flex-basis: 100%; } /* prettier-ignore */
+:--switcher-limit-4 > :nth-last-child(n+5), :--switcher-limit-4 > :nth-last-child(n+5) ~ * { flex-basis: 100%; } /* prettier-ignore */
+:--switcher-limit-5 > :nth-last-child(n+6), :--switcher-limit-5 > :nth-last-child(n+6) ~ * { flex-basis: 100%; } /* prettier-ignore */
+:--switcher-limit-6 > :nth-last-child(n+7), :--switcher-limit-6 > :nth-last-child(n+7) ~ * { flex-basis: 100%; } /* prettier-ignore */
+:--switcher-limit-7 > :nth-last-child(n+8), :--switcher-limit-7 > :nth-last-child(n+8) ~ * { flex-basis: 100%; } /* prettier-ignore */
+:--switcher-limit-8 > :nth-last-child(n+9), :--switcher-limit-8 > :nth-last-child(n+9) ~ * { flex-basis: 100%; } /* prettier-ignore */
 
 /* -------- COVER ------------ */
 @custom-selector :--cover .cover;
 @custom-selector :--no-padding .no-padding;
 @custom-selector :--centered .centered;
+/* TODO: from here haven't used custom selectors for all yet */
 /*
 --gap-cover: var dimension | The minimum space between and around the child elements
 --min-height-cover: var dimension (100vh) | The minimum height of the parent element, before it grows to accommodate its content
@@ -421,10 +436,10 @@ REMARK: .icon can be used alone if we don't need to control over space between i
 :--icon {
   /* Usually 0.75em more closely matches uppercase letter height */
   width: var(--width-icon, 0.75em);
-  /* 1cap = nominal height of capital letters of the element's font */
-  width: var(--width-icon, 1cap);
+  /* 1cap Not yet supported and unrecognized fallback messes things / 1cap = nominal height of capital letters of the element's font */
+  /* width: var(--width-icon, 1cap); */
   height: var(--height-icon, 0.75em);
-  height: var(--height-icon, 1cap);
+  /* height: var(--height-icon, 1cap); */
   vertical-align: var(--vertical-align-icon, baseline);
 }
 :--icon:--lowercase,
