@@ -79,9 +79,9 @@ button,
   --s-h9: var(--s-2, 0.25rem);
 }
 
-body,
-.w-ctx-prose,
-*[class*="w-ctx-"] {
+/* body, */
+/* *[class*="w-ctx-"], */
+.w-ctx-prose {
   /* prettier-ignore */
   & :--h1 { max-width: 20ch; } /* prettier-ignore */
   & :--h2, & :--h3 { max-width: 30ch; } /* prettier-ignore */
