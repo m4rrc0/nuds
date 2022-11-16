@@ -272,6 +272,7 @@ NEW: .centered | place a ".centered" class on the child that needs centering
 /* 
 --gap-grid: var dimension | The space (margin) between the (child) elements (fallback to --gap OR 1em)
 --width-column-min: var dimension -> minimum col width (or flex-basis if in flex mode)
+--width-column-max: var dimension -> max col width
 */
 :--grid {
   --gap-grid: var(--gap, 1em);
@@ -288,6 +289,10 @@ NEW: .centered | place a ".centered" class on the child that needs centering
       minmax(min(var(--width-column-min, 10rem), 100%), 1fr)
     );
   }
+}
+
+:--grid > * {
+  max-inline-size: var(--width-column-max, none);
 }
 
 /* -------- FRAME ------------ */
