@@ -482,6 +482,10 @@ REMARK: .icon can be used alone if we don't need to control over space between i
   margin-inline-start: var(--gap-icon, 1rem);
   margin-inline-start: var(--gap-icon, 1ch);
 }
+:--with-icon :--icon:only-child {
+  margin-inline-end: 0;
+  margin-inline-start: 0;
+}
 /* NOTE: use it like so */
 /* IMPORTANT to set width and height on the svg in case CSS fails to load */
 /* 
